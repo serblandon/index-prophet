@@ -1,0 +1,22 @@
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 14vh;
+}
+
+img {
+  width: 14vh;
+  height: auto;
+}
+
+.title {
+  text-align: center; /* Centers the title text */
+  border-radius: 8px; /* Rounds the corners of the div */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif; /* Arial font, with sans-serif as a fallback */
+  font-size: 32px; /* Sets the size of the title */
+  color: #333; /* Dark grey color for the text */
+  margin-bottom: 2vh;
+}
