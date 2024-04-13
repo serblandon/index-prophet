@@ -11,6 +11,6 @@ export class IndividualAssetService {
   constructor(private httpClient: HttpClient) { }
 
   getAssetPrices(ticker: string): Observable<IAssetData> {
-    return this.httpClient.get<IAssetData>(`./src/assets/mock-data/${ticker}.json`);
+    return this.httpClient.get<IAssetData>(`./assets/data/mock-data/${ticker}.json`);
   }
 }
