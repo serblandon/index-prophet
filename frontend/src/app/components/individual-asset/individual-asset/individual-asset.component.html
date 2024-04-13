@@ -1,1 +1,19 @@
-<p>individual-asset works!</p>
+<div class="container">
+    <div class="top-bar">
+      <a routerLink="/">
+        <div class="logo">
+          <img src="./assets/images/AppLogo.webp" alt="Logo" class="logo">
+        </div>
+      </a>
+      <div class="search">
+        <app-search-bar></app-search-bar>
+      </div>
+    </div>
+    <div *ngIf="assetData" class="stock-details">
+      <h1>{{ ticker }} Historical Prices</h1>
+      <div class="card">
+        <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+  </div>
+  
