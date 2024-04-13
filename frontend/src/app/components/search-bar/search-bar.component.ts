@@ -29,7 +29,7 @@ export class SearchBarComponent implements OnInit {
 
   searchStock() {
     if (this.ticker && this.ticker.length > 0) {
-      this.router.navigate(['/stock', this.ticker])
+      this.router.navigate(['/ticker', this.ticker])
         .then(() => {
           console.log('Navigation to stock detail successful!');
         })
@@ -38,7 +38,6 @@ export class SearchBarComponent implements OnInit {
         });
     }
   }
-
 
   suggest(event: any) {
     const query = event.query;
