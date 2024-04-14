@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
 import { IAssetData } from 'src/app/models/IAssetData';
@@ -24,7 +24,9 @@ export class IndividualAssetComponent implements OnInit {
   assetDataChart: any;
   chartOptions: any;
   
-  constructor(private route: ActivatedRoute, private individualAssetService: IndividualAssetService) { }
+  constructor(private route: ActivatedRoute,
+              private individualAssetService: IndividualAssetService,
+              private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap
@@ -54,7 +56,6 @@ export class IndividualAssetComponent implements OnInit {
 
           // Set chart options
           this.chartOptions = {
-
             plugins: {
               legend: {
                 display: false,
@@ -76,6 +77,10 @@ export class IndividualAssetComponent implements OnInit {
           console.error('Failed to get asset data:', error);
         }
       );
+  }
+
+  goToHomePage() {
+    this.router.navigate(['/']); // Navigate to the homepage without reloading the application
   }
 
 }
