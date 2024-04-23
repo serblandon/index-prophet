@@ -1,27 +1,16 @@
-﻿using Domain.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Models;
 
-namespace Infrastructure.Data;
+namespace WebApi.Data;
 
 public partial class IndexProphetContext : DbContext
 {
-    private readonly IConfiguration _configuration;
-
-    public IndexProphetContext(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public IndexProphetContext(DbContextOptions<IndexProphetContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<HistoricalPrice> HistoricalPrices { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
