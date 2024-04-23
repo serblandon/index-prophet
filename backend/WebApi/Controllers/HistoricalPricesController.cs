@@ -21,6 +21,8 @@ namespace WebApi.Controllers
         [ProducesResponseType(typeof(IEnumerable<HistoricalPrice>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetHistoricalAssetPricesAscending(string ticker)
         {
+            ticker = ticker.ToUpper();
+
             var response = await _mediator.Send(new GetHistoricalAssetPricesQuery() { Ticker = ticker} );
 
             if (!response.Any())
