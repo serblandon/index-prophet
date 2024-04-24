@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { IAssetData } from 'src/app/models/IAssetData';
+import { GenericRestApi } from 'src/app/shared/generic-rest-api';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IndividualAssetService {
+export class IndividualAssetService extends GenericRestApi<IAssetData>{
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(protected override httpClient: HttpClient) {
+    super(httpClient, "api/HistoricalPrices/GetHistoricalAssetPricesAscending");
+   }
 
-  getAssetPrices(ticker: string): Observable<IAssetData> {
-    return this.httpClient.get<IAssetData>(`./assets/data/mock-data/${ticker}.json`);
-  }
 }
