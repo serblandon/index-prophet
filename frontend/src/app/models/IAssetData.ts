@@ -1,6 +1,7 @@
 export interface IAssetData {
-    [date: string]: {
-      price: number;
-    };
+    id: number
+    ticker: string;
+    date: Date;
+    adjClosePrice: number;
   }
   
