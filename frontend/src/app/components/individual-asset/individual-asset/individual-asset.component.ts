@@ -19,8 +19,7 @@ import 'chartjs-adapter-moment';
 export class IndividualAssetComponent implements OnInit {
 
   ticker = '';
-  assetData: IAssetData = {};
-  assetDataKeys: string[] = [];
+  assetData: IAssetData[] = [];
   assetDataChart: any;
   chartOptions: any;
   
@@ -33,23 +32,24 @@ export class IndividualAssetComponent implements OnInit {
       .pipe(
         switchMap((params: ParamMap) => {
           this.ticker = params.get('ticker')!;
-          return this.individualAssetService.getAssetPrices(this.ticker);
+          return this.individualAssetService.getByTicker(this.ticker);
         })
       )
-      .subscribe(
-        (data: IAssetData) => {
+      .subscribe({
+        next: (data: IAssetData[]) => {
           this.assetData = data;
-          this.assetDataKeys = Object.keys(this.assetData);
 
           // Prepare chart data
           this.assetDataChart = {
-            labels: this.assetDataKeys.map((key) => key.substring(0, 10)), // Extracting the year from the date string
+            labels: this.assetData.map((entity) => entity.date.toString()),
             datasets: [
               {
                 type:'line',
-                data: this.assetDataKeys.map((key) => this.assetData[key]),
+                data: this.assetData.map((entity) => entity.adjClosePrice),
                 fill: false,
-                pointStyle:false
+                pointStyle:false,
+                pointRadius: 3,
+                tension: 0.1
               }
             ]
           };
@@ -72,11 +72,12 @@ export class IndividualAssetComponent implements OnInit {
             },
             responsive: true // Make the chart responsive
           };
+
         },
-        (error) => {
+        error: (error) => {
           console.error('Failed to get asset data:', error);
         }
-      );
+    });
   }
 
   goToHomePage() {
