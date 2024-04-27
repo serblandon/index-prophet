@@ -11,6 +11,16 @@
       <h1>{{ ticker }} Historical Prices</h1>
       <div class="card">
         <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+        <div class="tabs">
+          <p-tabView>
+            <p-tabPanel header="Predictions">
+              <p-dropdown [options]="predictionMethods" [(ngModel)]="selectedChartType" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
+              <ng-container [ngSwitch]="selectedPrediction.value">
+                <app-prophet-prediction *ngSwitchCase="'prophet'"></app-prophet-prediction>
+              </ng-container>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
       </div>
     </div>
   </div>

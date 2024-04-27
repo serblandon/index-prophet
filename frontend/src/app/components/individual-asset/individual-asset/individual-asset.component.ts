@@ -8,11 +8,15 @@ import { IndividualAssetHistoricalService } from 'src/app/services/individual-as
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
 import 'chartjs-adapter-moment';
+import { SelectItem } from 'primeng/api';
+import { TabViewModule } from 'primeng/tabview';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
-  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule],
+  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, TabViewModule, DropdownModule],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -22,6 +26,12 @@ export class IndividualAssetComponent implements OnInit {
   assetData: IAssetHistoricalData[] = [];
   assetDataChart: any;
   chartOptions: any;
+
+  // dropdown predictions
+  predictionMethods: SelectItem[] = [
+    { label: 'Prophet Prediction', value: 'prophet' },
+  ];
+  selectedPrediction: SelectItem = this.predictionMethods[0];
   
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
