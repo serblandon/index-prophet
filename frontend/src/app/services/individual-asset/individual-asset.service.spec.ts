@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IndividualAssetService } from './individual-asset.service';
+import { IndividualAssetHistoricalService } from './individual-asset.service';
 
-describe('IndividualAssetService', () => {
-  let service: IndividualAssetService;
+describe('IndividualAssetHistoricalService', () => {
+  let service: IndividualAssetHistoricalService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(IndividualAssetService);
+    service = TestBed.inject(IndividualAssetHistoricalService);
   });
 
   it('should be created', () => {

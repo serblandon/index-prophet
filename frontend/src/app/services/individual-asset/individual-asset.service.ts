@@ -6,7 +6,7 @@ import { GenericRestApi } from 'src/app/shared/generic-rest-api';
 @Injectable({
   providedIn: 'root'
 })
-export class IndividualAssetService extends GenericRestApi<IAssetData>{
+export class IndividualAssetHistoricalService extends GenericRestApi<IAssetData>{
 
   constructor(protected override httpClient: HttpClient) {
     super(httpClient, "api/HistoricalPrices/GetHistoricalAssetPricesAscending");

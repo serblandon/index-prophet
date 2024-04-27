@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
 import { IAssetData } from 'src/app/models/IAssetData';
-import { IndividualAssetService } from 'src/app/services/individual-asset/individual-asset.service';
+import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset/individual-asset.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
 import 'chartjs-adapter-moment';
@@ -24,7 +24,7 @@ export class IndividualAssetComponent implements OnInit {
   chartOptions: any;
   
   constructor(private route: ActivatedRoute,
-              private individualAssetService: IndividualAssetService,
+              private individualAssetHistoricalService: IndividualAssetHistoricalService,
               private router: Router) { }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class IndividualAssetComponent implements OnInit {
       .pipe(
         switchMap((params: ParamMap) => {
           this.ticker = params.get('ticker')!;
-          return this.individualAssetService.getByTicker(this.ticker);
+          return this.individualAssetHistoricalService.getByTicker(this.ticker);
         })
       )
       .subscribe({
