@@ -4,7 +4,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
 import { IAssetHistoricalData } from 'src/app/models/IAssetHistoricalData';
-import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset/individual-asset-historical.service';
+import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset-historical/individual-asset-historical.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
 import 'chartjs-adapter-moment';
