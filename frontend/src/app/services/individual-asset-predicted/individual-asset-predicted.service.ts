@@ -9,6 +9,6 @@ import { GenericRestApi } from 'src/app/shared/generic-rest-api';
 export class IndividualAssetPredictedService extends GenericRestApi<IAssetPredictedData> {
 
   constructor(protected override httpClient: HttpClient) { 
-    super(httpClient, "api/PredictedPrices/GetPredictedAssetPricesAscendingAsync");
+    super(httpClient, "api/PredictedPrices/GetPredictedAssetPricesAscending");
   }
 }
