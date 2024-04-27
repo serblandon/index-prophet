@@ -1,4 +1,4 @@
-export interface IAssetData {
+export interface IAssetHistoricalData {
     id: number
     ticker: string;
     date: Date;

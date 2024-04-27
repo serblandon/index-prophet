@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
-import { IAssetData } from 'src/app/models/IAssetData';
+import { IAssetHistoricalData } from 'src/app/models/IAssetHistoricalData';
 import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset/individual-asset-historical.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
@@ -19,7 +19,7 @@ import 'chartjs-adapter-moment';
 export class IndividualAssetComponent implements OnInit {
 
   ticker = '';
-  assetData: IAssetData[] = [];
+  assetData: IAssetHistoricalData[] = [];
   assetDataChart: any;
   chartOptions: any;
   
@@ -36,7 +36,7 @@ export class IndividualAssetComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (data: IAssetData[]) => {
+        next: (data: IAssetHistoricalData[]) => {
           this.assetData = data;
 
           // Prepare chart data
