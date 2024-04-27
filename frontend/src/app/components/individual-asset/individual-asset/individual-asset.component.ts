@@ -11,12 +11,13 @@ import 'chartjs-adapter-moment';
 import { SelectItem } from 'primeng/api';
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
 import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
-  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, TabViewModule, DropdownModule],
+  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, TabViewModule, DropdownModule, FormsModule],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })

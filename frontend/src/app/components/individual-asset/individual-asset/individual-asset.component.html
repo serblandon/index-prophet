@@ -14,7 +14,7 @@
         <div class="tabs">
           <p-tabView>
             <p-tabPanel header="Predictions">
-              <p-dropdown [options]="predictionMethods" [(ngModel)]="selectedChartType" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
+              <p-dropdown [options]="predictionMethods" [(ngModel)]="selectedPrediction" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
               <ng-container [ngSwitch]="selectedPrediction.value">
                 <app-prophet-prediction *ngSwitchCase="'prophet'"></app-prophet-prediction>
               </ng-container>
