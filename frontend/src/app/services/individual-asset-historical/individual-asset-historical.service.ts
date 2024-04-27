@@ -9,7 +9,6 @@ import { GenericRestApi } from 'src/app/shared/generic-rest-api';
 export class IndividualAssetHistoricalService extends GenericRestApi<IAssetHistoricalData>{
 
   constructor(protected override httpClient: HttpClient) {
-    super(httpClient, "api/HistoricalPrices/GetHistoricalAssetPricesAscending");
+    super(httpClient, "api/HistoricalPrices/GetHistoricalAssetPricesAscendingAsync");
    }
-
 }
