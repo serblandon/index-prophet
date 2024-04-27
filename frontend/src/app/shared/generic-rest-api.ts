@@ -10,4 +10,8 @@ export class GenericRestApi<T> {
     public getByTicker(ticker: string): Observable<T[]> {
       return this.httpClient.get<T[]>(`${this.url}/${ticker}`);
     }
+
+    public getByTickerAndPredictionMethod(ticker: string, predictionMethod: string): Observable<T[]> {
+      return this.httpClient.get<T[]>(`${this.url}/${ticker}/${predictionMethod}`);
+    }
 }
