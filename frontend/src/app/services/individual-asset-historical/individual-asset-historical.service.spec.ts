@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IndividualAssetHistoricalService } from './individual-asset.service';
+import { IndividualAssetHistoricalService } from './individual-asset-historical.service';
 
 describe('IndividualAssetHistoricalService', () => {
   let service: IndividualAssetHistoricalService;
