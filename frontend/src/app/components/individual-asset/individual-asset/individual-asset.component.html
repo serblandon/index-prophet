@@ -8,9 +8,10 @@
       </div>
     </div>
     <div *ngIf="assetData" class="asset-details">
-      <h1>{{ ticker }} Historical Prices</h1>
+      <h1>{{ ticker | uppercase }} Historical Prices</h1>
       <div class="card">
         <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+        <h1>{{ ticker | uppercase }} Predicted Prices</h1>
         <div class="tabs">
           <p-tabView>
             <p-tabPanel header="Predictions">
