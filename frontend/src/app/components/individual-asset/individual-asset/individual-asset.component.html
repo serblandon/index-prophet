@@ -16,7 +16,7 @@
             <p-tabPanel header="Predictions">
               <p-dropdown [options]="predictionMethods" [(ngModel)]="selectedPrediction" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
               <ng-container [ngSwitch]="selectedPrediction.value">
-                <app-prophet-prediction *ngSwitchCase="'prophet'"></app-prophet-prediction>
+                <app-prophet-prediction *ngSwitchCase="'prophet'" [assetData]="assetData"></app-prophet-prediction>
               </ng-container>
             </p-tabPanel>
           </p-tabView>

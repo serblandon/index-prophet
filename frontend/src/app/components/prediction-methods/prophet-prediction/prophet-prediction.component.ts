@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common';
 import 'chartjs-adapter-moment';
@@ -18,17 +18,16 @@ import { IAssetHistoricalData } from 'src/app/models/IAssetHistoricalData';
 })
 export class ProphetPredictionComponent implements OnInit {
 
+  @Input() assetData: any;
+
   ticker = '';
   predictionMethod = 'Prophet';
   predictedData: IAssetPredictedData[] = [];
-  assetData: IAssetHistoricalData[] = [];
-  assetDataChart: any;
+  totalDataChart: any;
   chartOptions: any;
 
   constructor(private route: ActivatedRoute,
-    private individualAssetPredictedService: IndividualAssetPredictedService,
-    private individualAssetHistoricalService: IndividualAssetHistoricalService,
-    private router: Router) { }
+    private individualAssetPredictedService: IndividualAssetPredictedService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -41,15 +40,9 @@ export class ProphetPredictionComponent implements OnInit {
         .subscribe({
           next: (data: IAssetPredictedData[]) => {
             this.predictedData = data;
-
-            this.individualAssetHistoricalService.getByTicker(this.ticker).subscribe({
-              next: (data: IAssetHistoricalData[]) => {
-                this.assetData = data;
-              }
-            })
   
             // Prepare chart data
-            this.assetDataChart = {
+            this.totalDataChart = {
               labels: this.predictedData.map((entity) => entity.date.toString()),
               datasets: [
                 {
@@ -64,8 +57,8 @@ export class ProphetPredictionComponent implements OnInit {
                 },
                 {
                   type:'line',
-                  label: 'Historical Price',
-                  data: this.assetData.map((entity) => entity.adjClosePrice),
+                  label: 'Historical Prices',
+                  data: this.assetData.map((entity: any) => entity.adjClosePrice),
                   fill: false,
                   pointStyle: false,
                   pointRadius: 3,
