@@ -3,7 +3,7 @@ import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common';
 import 'chartjs-adapter-moment';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
 import { switchMap } from 'rxjs';
 
