@@ -6,8 +6,6 @@ import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
 import { switchMap } from 'rxjs';
-import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset-historical/individual-asset-historical.service';
-import { IAssetHistoricalData } from 'src/app/models/IAssetHistoricalData';
 
 @Component({
   selector: 'app-prophet-prediction',
