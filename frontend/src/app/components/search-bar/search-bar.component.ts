@@ -4,11 +4,13 @@ import { TickerService } from '../../services/ticker/ticker.service';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [AutoCompleteModule, FormsModule, ButtonModule],
+  imports: [AutoCompleteModule, FormsModule, ButtonModule, ToastrModule, CommonModule],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })
@@ -16,7 +18,10 @@ export class SearchBarComponent implements OnInit {
   ticker = '';
   suggestions: string[] = [];
 
-  constructor(private router: Router, private tickerService: TickerService) { }
+  constructor(private router: Router,
+              private tickerService: TickerService,
+              private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
     this.tickerService.getTickers().then((tickers: unknown) => {
@@ -28,14 +33,19 @@ export class SearchBarComponent implements OnInit {
 
 
   searchStock() {
-    if (this.ticker && this.ticker.length > 0 && this.suggestions.includes(this.ticker)) {
-      this.router.navigate(['/ticker', this.ticker])
-        .then(() => {
-          console.log('Navigation to stock detail successful!');
-        })
-        .catch(err => {
-          console.error(`Navigation to stock detail failed: ${err}`);
-        });
+    if (this.isInSp500(this.ticker)) {
+      if (this.isTickerValid(this.ticker)) {
+        this.router.navigate(['/ticker', this.ticker])
+          .then(() => {
+            this.toastr.success(`Navigation to '${this.ticker.toUpperCase()}' was successful!`, 'Success')
+          })
+          .catch(err => {
+            this.toastr.error(`Navigation to '${this.ticker.toUpperCase()}: ${err}' failed!`, 'Error');
+          });
+      }
+    }
+    else {
+      this.toastr.error(`Ticker '${this.ticker}' is not part of S&P 500`, 'Error');
     }
   }
 
@@ -44,5 +54,19 @@ export class SearchBarComponent implements OnInit {
     this.suggestions = Array.from(new Set(
       this.tickerService.data.filter(ticker => ticker.toLowerCase().startsWith(query.toLowerCase()))
     ));
+  }
+
+  private isInSp500(ticker: string) {
+    if (this.suggestions.includes(ticker.toUpperCase())) {
+      return true;
+    }
+    return false;
+  }
+
+  private isTickerValid(ticker: string) {
+    if (ticker && ticker.length > 0) {
+      return true;
+    }
+    return false;
   }
 }
