@@ -45,7 +45,7 @@ export class SearchBarComponent implements OnInit {
       }
     }
     else {
-      this.toastr.error(`Ticker '${this.ticker}' is not part of S&P 500`, 'Error');
+      this.toastr.error(`Ticker '${this.ticker.toUpperCase()}' is not part of S&P 500`, 'Error');
     }
   }
 
