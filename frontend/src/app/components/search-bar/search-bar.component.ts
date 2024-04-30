@@ -28,7 +28,7 @@ export class SearchBarComponent implements OnInit {
 
 
   searchStock() {
-    if (this.ticker && this.ticker.length > 0) {
+    if (this.ticker && this.ticker.length > 0 && this.suggestions.includes(this.ticker)) {
       this.router.navigate(['/ticker', this.ticker])
         .then(() => {
           console.log('Navigation to stock detail successful!');
@@ -45,5 +45,4 @@ export class SearchBarComponent implements OnInit {
       this.tickerService.data.filter(ticker => ticker.toLowerCase().startsWith(query.toLowerCase()))
     ));
   }
-
 }
