@@ -18,6 +18,7 @@
               <p-dropdown [options]="predictionMethods" [(ngModel)]="selectedPrediction" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
               <ng-container [ngSwitch]="selectedPrediction.value">
                 <app-prophet-prediction *ngSwitchCase="'prophet'" [assetData]="assetData"></app-prophet-prediction>
+                <app-lstm-prediction *ngSwitchCase="'LSTM'" [assetData]="assetData"></app-lstm-prediction>
               </ng-container>
             </p-tabPanel>
           </p-tabView>
