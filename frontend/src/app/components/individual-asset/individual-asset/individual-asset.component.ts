@@ -75,7 +75,18 @@ export class IndividualAssetComponent implements OnInit {
               },
               tooltip: {
                 label: 'Price',
-                enabled: true// <-- this option disables tooltips
+                enabled: true,
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                bodyColor: '#ffffff',
+                bodyFont: {
+                  size: 14
+                },
+                borderColor: '#42A5F5',
+                borderWidth: 1,
+                cornerRadius: 3,
+                displayColors: false,
+                mode: 'index',
+                intersect: false
               }
               },
             scales: {
