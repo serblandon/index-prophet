@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
@@ -13,7 +13,7 @@ import { IndividualAssetPredictedService } from 'src/app/services/individual-ass
   templateUrl: './lstm-prediction.component.html',
   styleUrl: './lstm-prediction.component.scss'
 })
-export class LstmPredictionComponent implements OnInit{
+export class LstmPredictionComponent implements OnInit, OnChanges{
 
   @Input() assetData: any;
 
@@ -86,7 +86,11 @@ export class LstmPredictionComponent implements OnInit{
                   beginAtZero: true // Start the y-axis from zero
                 }
               },
-              responsive: true // Make the chart responsive
+              responsive: true, // Make the chart responsive
+              animation: {
+                duration: 1600, // general animation time
+                easing: 'easeInOutQuad'
+              }
             };
   
           },
@@ -94,5 +98,9 @@ export class LstmPredictionComponent implements OnInit{
             console.error('Failed to get asset data:', error);
           },
       });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      // This will run whenever any input properties change
     }
 }

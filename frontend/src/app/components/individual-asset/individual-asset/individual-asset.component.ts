@@ -83,7 +83,11 @@ export class IndividualAssetComponent implements OnInit {
                 beginAtZero: true // Start the y-axis from zero
               }
             },
-            responsive: true // Make the chart responsive
+            responsive: true, // Make the chart responsive
+            animation: {
+              duration: 1600, // general animation time
+              easing: 'easeInOutQuad'
+            }
           };
 
         },
