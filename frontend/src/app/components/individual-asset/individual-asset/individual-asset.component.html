@@ -19,6 +19,7 @@
               <ng-container [ngSwitch]="selectedPrediction.value">
                 <app-prophet-prediction *ngSwitchCase="'prophet'" [assetData]="assetData"></app-prophet-prediction>
                 <app-lstm-prediction *ngSwitchCase="'LSTM'" [assetData]="assetData"></app-lstm-prediction>
+                <app-gru-prediction *ngSwitchCase="'GRU'" [assetData]="assetData"></app-gru-prediction>
               </ng-container>
             </p-tabPanel>
           </p-tabView>

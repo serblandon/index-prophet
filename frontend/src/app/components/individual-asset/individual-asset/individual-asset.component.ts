@@ -14,11 +14,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
 import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction/lstm-prediction.component';
+import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction/gru-prediction.component';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
-  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, LstmPredictionComponent, TabViewModule, DropdownModule, FormsModule],
+  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent, TabViewModule, DropdownModule, FormsModule],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -32,7 +33,8 @@ export class IndividualAssetComponent implements OnInit {
   // dropdown predictions
   predictionMethods: SelectItem[] = [
     { label: 'Prophet Prediction', value: 'prophet' },
-    { label: 'LSTM Prediction', value: 'LSTM'}
+    { label: 'LSTM Prediction', value: 'LSTM'},
+    { label: 'GRU Prediction', value: 'GRU'}
   ];
   selectedPrediction: SelectItem = this.predictionMethods[0];
   
