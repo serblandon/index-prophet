@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
@@ -26,7 +27,8 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
 
   constructor(private route: ActivatedRoute,
     private individualAssetPredictedService: IndividualAssetPredictedService,
-    private csvExportService: CsvExportService) { }
+    private csvExportService: CsvExportService,
+    private toastr: ToastrService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -108,5 +110,7 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
 
     exportDataAsCSV() {
       this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-LSTM`);
+      
+      this.toastr.success('CSV-LSTM has been successfully downloaded.', 'Success');
     }
 }

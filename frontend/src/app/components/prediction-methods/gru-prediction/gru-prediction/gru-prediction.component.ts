@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
@@ -26,7 +27,8 @@ export class GruPredictionComponent implements OnInit{
 
   constructor(private route: ActivatedRoute,
     private individualAssetPredictedService: IndividualAssetPredictedService,
-    private csvExportService: CsvExportService) { }
+    private csvExportService: CsvExportService,
+    private toastr: ToastrService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -104,5 +106,7 @@ export class GruPredictionComponent implements OnInit{
 
     exportDataAsCSV() {
       this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-GRU`);
+
+      this.toastr.success('CSV-GRU has been successfully downloaded.', 'Success');
     }
 }

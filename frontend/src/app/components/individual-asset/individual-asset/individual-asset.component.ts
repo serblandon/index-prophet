@@ -16,6 +16,7 @@ import { ProphetPredictionComponent } from '../../prediction-methods/prophet-pre
 import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction/lstm-prediction.component';
 import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction/gru-prediction.component';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-individual-asset',
@@ -42,7 +43,8 @@ export class IndividualAssetComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
               private router: Router,
-              private csvExportService: CsvExportService) { }
+              private csvExportService: CsvExportService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.route.paramMap
@@ -118,6 +120,8 @@ export class IndividualAssetComponent implements OnInit {
 
   exportDataAsCSV() {
     this.csvExportService.downloadFile(this.assetData, `${this.ticker}-historical`);
+
+    this.toastr.success('CSV-Historical has been successfully downloaded.', 'Success');
   }
 
 }
