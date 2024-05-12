@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
 import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction/lstm-prediction.component';
 import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction/gru-prediction.component';
+import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 
 @Component({
   selector: 'app-individual-asset',
@@ -40,7 +41,8 @@ export class IndividualAssetComponent implements OnInit {
   
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
-              private router: Router) { }
+              private router: Router,
+              private csvExportService: CsvExportService) { }
 
   ngOnInit() {
     this.route.paramMap
@@ -112,6 +114,10 @@ export class IndividualAssetComponent implements OnInit {
 
   goToHomePage() {
     this.router.navigate(['/']); // Navigate to the homepage without reloading the application
+  }
+
+  exportDataAsCSV() {
+    this.csvExportService.downloadFile(this.assetData, `${this.ticker}-historical`);
   }
 
 }
