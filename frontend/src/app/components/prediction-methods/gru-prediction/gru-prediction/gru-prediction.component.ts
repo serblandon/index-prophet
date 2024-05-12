@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
+import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class GruPredictionComponent implements OnInit{
   chartOptions: any;
 
   constructor(private route: ActivatedRoute,
-    private individualAssetPredictedService: IndividualAssetPredictedService) { }
+    private individualAssetPredictedService: IndividualAssetPredictedService,
+    private csvExportService: CsvExportService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -98,5 +100,9 @@ export class GruPredictionComponent implements OnInit{
             console.error('Failed to get asset data:', error);
           },
       });
+    }
+
+    exportDataAsCSV() {
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-GRU`);
     }
 }

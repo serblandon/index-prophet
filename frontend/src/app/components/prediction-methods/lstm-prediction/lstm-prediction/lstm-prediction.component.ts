@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
+import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
   chartOptions: any;
 
   constructor(private route: ActivatedRoute,
-    private individualAssetPredictedService: IndividualAssetPredictedService) { }
+    private individualAssetPredictedService: IndividualAssetPredictedService,
+    private csvExportService: CsvExportService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -102,5 +104,9 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
 
     ngOnChanges(changes: SimpleChanges): void {
       // This will run whenever any input properties change
+    }
+
+    exportDataAsCSV() {
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-LSTM`);
     }
 }

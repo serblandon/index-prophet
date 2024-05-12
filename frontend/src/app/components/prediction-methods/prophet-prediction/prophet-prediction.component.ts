@@ -6,6 +6,7 @@ import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
 import { switchMap } from 'rxjs';
+import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 
 @Component({
   selector: 'app-prophet-prediction',
@@ -25,7 +26,8 @@ export class ProphetPredictionComponent implements OnInit {
   chartOptions: any;
 
   constructor(private route: ActivatedRoute,
-    private individualAssetPredictedService: IndividualAssetPredictedService) { }
+    private individualAssetPredictedService: IndividualAssetPredictedService,
+    private csvExportService: CsvExportService) { }
 
     ngOnInit() {
       this.route.paramMap
@@ -94,5 +96,9 @@ export class ProphetPredictionComponent implements OnInit {
             console.error('Failed to get asset data:', error);
           },
       });
+    }
+
+    exportDataAsCSV() {
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-Prophet`);
     }
 }
