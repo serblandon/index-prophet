@@ -22,7 +22,7 @@ export class CsvExportService {
     for (let i = 0; i < array.length; i++) {
       let line = '';
       for (let index in array[i]) {
-        if (header.indexOf(index) > 0) {
+        if (header.indexOf(index) > 0 && header.indexOf(index) < 4) {
           if (line != '') line += ',';
           line += `"${array[i][index]}"`;
         }
