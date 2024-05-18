@@ -14,7 +14,7 @@ export class CsvExportService {
 
     // Extract headers
     let header = Object.keys(array[0]);
-    let headerToKeep = header.slice(1); // Skip the first column
+    let headerToKeep = header.slice(2); // Skip the first column
     row += headerToKeep.join(',');
     row += '\r\n';
 
@@ -22,7 +22,7 @@ export class CsvExportService {
     for (let i = 0; i < array.length; i++) {
       let line = '';
       for (let index in array[i]) {
-        if (header.indexOf(index) > 0 && header.indexOf(index) < 4) {
+        if (header.indexOf(index) > 1 && header.indexOf(index) < 4) {
           if (line != '') line += ',';
           line += `"${array[i][index]}"`;
         }
