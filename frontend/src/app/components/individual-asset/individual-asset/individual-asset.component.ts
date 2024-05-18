@@ -43,12 +43,6 @@ export class IndividualAssetComponent implements OnInit, AfterViewInit {
     { label: 'GRU Prediction', value: 'GRU'}
   ];
   selectedPrediction: SelectItem = this.predictionMethods[0];
-
-  exportOptions: SelectItem[] = [
-    { label: 'Export as CSV', value: 'csv' },
-    { label: 'Export Chart as PDF', value: 'pdf' }
-  ];
-  selectedExportOption: string = '';
   
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
@@ -156,14 +150,6 @@ export class IndividualAssetComponent implements OnInit, AfterViewInit {
       });
     } else {
       this.toastr.error('Chart element is not available.', 'Error');
-    }
-  }
-
-  onExportOptionChange(event: any) {
-    if (event.value === 'csv') {
-      this.exportDataAsCSV();
-    } else if (event.value === 'pdf') {
-      this.exportChartAsPDF();
     }
   }
 
