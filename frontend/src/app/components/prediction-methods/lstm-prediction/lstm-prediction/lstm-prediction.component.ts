@@ -132,7 +132,7 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
         html2canvas(chartElement).then(canvas => {
           const imgData = canvas.toDataURL('image/png');
           const pdf = new jsPDF('landscape');
-          const imgWidth = 280; // Adjust the width as needed
+          const imgWidth = 280;
           const imgHeight = canvas.height * imgWidth / canvas.width;
           pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
           pdf.save(`${this.ticker.toUpperCase()}-chart-LSTM.pdf`);
