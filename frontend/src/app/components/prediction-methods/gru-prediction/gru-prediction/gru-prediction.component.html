@@ -1,7 +1,4 @@
 <div #chart>
     <p-chart type="line" [data]="totalDataChart" [options]="chartOptions"></p-chart>
 </div>
-<div class="btn-group">
-    <button class="btn btn-primary" (click)="exportDataAsCSV()">Export as CSV</button>
-    <button class="btn btn-secondary" (click)="exportChartAsPDF()">Export as PDF</button>
-  </div>
+<p-splitButton label="Export" icon="pi pi-download" (onClick)="exportDataAsCSV()" [model]="exportItems"></p-splitButton>

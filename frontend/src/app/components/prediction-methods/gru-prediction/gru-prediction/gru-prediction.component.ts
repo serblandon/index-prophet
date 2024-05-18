@@ -4,16 +4,18 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
+import { MenuItem } from 'primeng/api';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
 import { IAssetPredictedData } from 'src/app/models/IAssetPredictedData';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { IndividualAssetPredictedService } from 'src/app/services/individual-asset-predicted/individual-asset-predicted.service';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @Component({
   selector: 'app-gru-prediction',
   standalone: true,
-  imports: [CommonModule, ChartModule],
+  imports: [CommonModule, ChartModule, SplitButtonModule],
   templateUrl: './gru-prediction.component.html',
   styleUrl: './gru-prediction.component.scss'
 })
@@ -28,10 +30,17 @@ export class GruPredictionComponent implements OnInit{
   totalDataChart: any;
   chartOptions: any;
 
+  exportItems: MenuItem[];
+
   constructor(private route: ActivatedRoute,
     private individualAssetPredictedService: IndividualAssetPredictedService,
     private csvExportService: CsvExportService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) { 
+      this.exportItems = [
+        { label: 'Export as CSV', icon: 'pi pi-file', command: () => this.exportDataAsCSV() },
+        { label: 'Export as PDF', icon: 'pi pi-file-pdf', command: () => this.exportChartAsPDF() }
+      ];
+    }
 
     ngOnInit() {
       this.route.paramMap

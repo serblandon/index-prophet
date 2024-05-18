@@ -8,7 +8,7 @@ import { IndividualAssetHistoricalService } from 'src/app/services/individual-as
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
 import 'chartjs-adapter-moment';
-import { SelectItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
@@ -17,13 +17,14 @@ import { LstmPredictionComponent } from '../../prediction-methods/lstm-predictio
 import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction/gru-prediction.component';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { ToastrService } from 'ngx-toastr';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
-  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent, TabViewModule, DropdownModule, FormsModule],
+  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent, TabViewModule, DropdownModule, FormsModule, SplitButtonModule],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -43,12 +44,19 @@ export class IndividualAssetComponent implements OnInit {
     { label: 'GRU Prediction', value: 'GRU'}
   ];
   selectedPrediction: SelectItem = this.predictionMethods[0];
+
+  exportItems: MenuItem[];
   
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
               private router: Router,
               private csvExportService: CsvExportService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService) { 
+                this.exportItems = [
+                  { label: 'Export as CSV', icon: 'pi pi-file', command: () => this.exportDataAsCSV() },
+                  { label: 'Export as PDF', icon: 'pi pi-file-pdf', command: () => this.exportChartAsPDF() }
+                ];
+              }
 
   ngOnInit() {
     this.route.paramMap

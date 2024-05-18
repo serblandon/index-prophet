@@ -10,11 +10,13 @@ import { CsvExportService } from 'src/app/services/csv-export/csv-export.service
 import { ToastrService } from 'ngx-toastr';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-prophet-prediction',
   standalone: true,
-  imports: [CommonModule, ChartModule],
+  imports: [CommonModule, ChartModule, SplitButtonModule],
   templateUrl: './prophet-prediction.component.html',
   styleUrl: './prophet-prediction.component.scss'
 })
@@ -29,10 +31,17 @@ export class ProphetPredictionComponent implements OnInit {
   totalDataChart: any;
   chartOptions: any;
 
+  exportItems: MenuItem[];
+
   constructor(private route: ActivatedRoute,
     private individualAssetPredictedService: IndividualAssetPredictedService,
     private csvExportService: CsvExportService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+      this.exportItems = [
+        { label: 'Export as CSV', icon: 'pi pi-file', command: () => this.exportDataAsCSV() },
+        { label: 'Export as PDF', icon: 'pi pi-file-pdf', command: () => this.exportChartAsPDF() }
+      ];
+     }
 
     ngOnInit() {
       this.route.paramMap

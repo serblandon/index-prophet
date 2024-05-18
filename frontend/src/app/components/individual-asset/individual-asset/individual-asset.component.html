@@ -6,10 +6,7 @@
       <div class="search">
         <app-search-bar></app-search-bar>
       </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" (click)="exportDataAsCSV()">Export as CSV</button>
-        <button class="btn btn-secondary" (click)="exportChartAsPDF()">Export as PDF</button>
-      </div>
+      <p-splitButton label="Export" icon="pi pi-download" (onClick)="exportDataAsCSV()" [model]="exportItems"></p-splitButton>
     </div>
     <div *ngIf="assetData" class="asset-details">
       <h1>{{ ticker | uppercase }} Historical Prices</h1>
