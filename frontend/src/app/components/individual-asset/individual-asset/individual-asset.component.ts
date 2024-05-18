@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
@@ -27,7 +27,7 @@ import jsPDF from 'jspdf';
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
-export class IndividualAssetComponent implements OnInit, AfterViewInit {
+export class IndividualAssetComponent implements OnInit {
 
   @ViewChild('chart') chartElement!: ElementRef;
 
@@ -116,9 +116,6 @@ export class IndividualAssetComponent implements OnInit, AfterViewInit {
           console.error('Failed to get asset data:', error);
         }
     });
-  }
-
-  ngAfterViewInit() {
   }
 
   goToHomePage() {
