@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { CommonModule } from '@angular/common';
 import 'chartjs-adapter-moment';
@@ -8,6 +8,8 @@ import { IndividualAssetPredictedService } from 'src/app/services/individual-ass
 import { switchMap } from 'rxjs';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { ToastrService } from 'ngx-toastr';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-prophet-prediction',
@@ -19,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProphetPredictionComponent implements OnInit {
 
   @Input() assetData: any;
+  @ViewChild('chart') chartElement!: ElementRef;
 
   ticker = '';
   predictionMethod = 'Prophet';
@@ -103,6 +106,26 @@ export class ProphetPredictionComponent implements OnInit {
     exportDataAsCSV() {
       this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-Prophet`);
 
-      this.toastr.success('CSV-Prophet has been successfully downloaded.', 'Success');
+      this.toastr.success(`${this.ticker.toUpperCase()}-CSV-Prophet has been successfully downloaded.`, 'Success');
+    }
+
+    exportChartAsPDF() {
+      if (this.chartElement) {
+        const chartElement = this.chartElement.nativeElement;
+        html2canvas(chartElement).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('landscape');
+          const imgWidth = 280; // Adjust the width as needed
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+          pdf.save(`${this.ticker}-chart-Prophet.pdf`);
+  
+          this.toastr.success(`${this.ticker.toUpperCase()}-Prophet has been successfully exported as PDF.`, 'Success');
+        }).catch(error => {
+          this.toastr.error('Failed to export chart as PDF.', 'Error');
+        });
+      } else {
+        this.toastr.error('Chart element is not available.', 'Error');
+      }
     }
 }

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
@@ -18,6 +20,7 @@ import { IndividualAssetPredictedService } from 'src/app/services/individual-ass
 export class GruPredictionComponent implements OnInit{
 
   @Input() assetData: any;
+  @ViewChild('chart') chartElement!: ElementRef;
 
   ticker = '';
   predictionMethod = 'GRU';
@@ -43,9 +46,9 @@ export class GruPredictionComponent implements OnInit{
             this.predictedData = data;
             
             const assetDataValues = this.assetData.map((entity: any) => entity.adjClosePrice);
-            const lstmDataValues = this.predictedData.map((entity) => entity.adjClosePrice);
+            const gruDataValues = this.predictedData.map((entity) => entity.adjClosePrice);
             const assetDataLength = assetDataValues.length;
-            const lstmDataAdjusted = Array(assetDataLength).fill(null).concat(lstmDataValues);
+            const gruDataAdjusted = Array(assetDataLength).fill(null).concat(gruDataValues);
 
             // Prepare chart data
             this.totalDataChart = {
@@ -54,7 +57,7 @@ export class GruPredictionComponent implements OnInit{
                 {
                   type:'line',
                   label: 'GRU Prediction',
-                  data: lstmDataAdjusted,
+                  data: gruDataAdjusted,
                   fill: false,
                   pointStyle: false,
                   pointRadius: 3,
@@ -107,6 +110,27 @@ export class GruPredictionComponent implements OnInit{
     exportDataAsCSV() {
       this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-GRU`);
 
-      this.toastr.success('CSV-GRU has been successfully downloaded.', 'Success');
+      this.toastr.success(`${this.ticker.toUpperCase()}-CSV-GRU has been successfully downloaded.`, 'Success');
     }
+
+    exportChartAsPDF() {
+      if (this.chartElement) {
+        const chartElement = this.chartElement.nativeElement;
+        html2canvas(chartElement).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('landscape');
+          const imgWidth = 280; // Adjust the width as needed
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+          pdf.save(`${this.ticker}-chart-GRU.pdf`);
+  
+          this.toastr.success(`${this.ticker.toUpperCase()}-GRU has been successfully exported as PDF.`, 'Success');
+        }).catch(error => {
+          this.toastr.error('Failed to export chart as PDF.', 'Error');
+        });
+      } else {
+        this.toastr.error('Chart element is not available.', 'Error');
+      }
+    }
+
 }

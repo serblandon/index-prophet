@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { ToastrService } from 'ngx-toastr';
 import { ChartModule } from 'primeng/chart';
 import { switchMap } from 'rxjs';
@@ -18,6 +20,7 @@ import { IndividualAssetPredictedService } from 'src/app/services/individual-ass
 export class LstmPredictionComponent implements OnInit, OnChanges{
 
   @Input() assetData: any;
+  @ViewChild('chart') chartElement!: ElementRef;
 
   ticker = '';
   predictionMethod = 'LSTM';
@@ -111,6 +114,26 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
     exportDataAsCSV() {
       this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-LSTM`);
       
-      this.toastr.success('CSV-LSTM has been successfully downloaded.', 'Success');
+      this.toastr.success(`${this.ticker.toUpperCase()}-CSV-LSTM has been successfully downloaded.`, 'Success');
+    }
+
+    exportChartAsPDF() {
+      if (this.chartElement) {
+        const chartElement = this.chartElement.nativeElement;
+        html2canvas(chartElement).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF('landscape');
+          const imgWidth = 280; // Adjust the width as needed
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+          pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+          pdf.save(`${this.ticker}-chart-LSTM.pdf`);
+  
+          this.toastr.success(`${this.ticker.toUpperCase()}-LSTM has been successfully exported as PDF.`, 'Success');
+        }).catch(error => {
+          this.toastr.error('Failed to export chart as PDF.', 'Error');
+        });
+      } else {
+        this.toastr.error('Chart element is not available.', 'Error');
+      }
     }
 }
