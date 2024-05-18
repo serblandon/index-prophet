@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
@@ -17,6 +17,8 @@ import { LstmPredictionComponent } from '../../prediction-methods/lstm-predictio
 import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction/gru-prediction.component';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { ToastrService } from 'ngx-toastr';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-individual-asset',
@@ -25,7 +27,9 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
-export class IndividualAssetComponent implements OnInit {
+export class IndividualAssetComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('chart') chartElement!: ElementRef;
 
   ticker = '';
   assetData: IAssetHistoricalData[] = [];
@@ -39,6 +43,12 @@ export class IndividualAssetComponent implements OnInit {
     { label: 'GRU Prediction', value: 'GRU'}
   ];
   selectedPrediction: SelectItem = this.predictionMethods[0];
+
+  exportOptions: SelectItem[] = [
+    { label: 'Export as CSV', value: 'csv' },
+    { label: 'Export Chart as PDF', value: 'pdf' }
+  ];
+  selectedExportOption: string = '';
   
   constructor(private route: ActivatedRoute,
               private individualAssetHistoricalService: IndividualAssetHistoricalService,
@@ -114,14 +124,47 @@ export class IndividualAssetComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+  }
+
   goToHomePage() {
     this.router.navigate(['/']); // Navigate to the homepage without reloading the application
+  
+    this.toastr.success('You have successfully navigated to the Home Page.', 'Success');
   }
 
   exportDataAsCSV() {
     this.csvExportService.downloadFile(this.assetData, `${this.ticker}-historical`);
 
-    this.toastr.success('CSV-Historical has been successfully downloaded.', 'Success');
+    this.toastr.success(`${this.ticker.toUpperCase()}-CSV-Historical has been successfully downloaded.`, 'Success');
+  }
+
+  exportChartAsPDF() {
+    if (this.chartElement) {
+      const chartElement = this.chartElement.nativeElement;
+      html2canvas(chartElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('landscape');
+        const imgWidth = 280; // Adjust the width as needed
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+        pdf.save(`${this.ticker}-chart-historical.pdf`);
+
+        this.toastr.success(`${this.ticker.toUpperCase()}-Historical has been successfully exported as PDF.`, 'Success');
+      }).catch(error => {
+        this.toastr.error('Failed to export chart as PDF.', 'Error');
+      });
+    } else {
+      this.toastr.error('Chart element is not available.', 'Error');
+    }
+  }
+
+  onExportOptionChange(event: any) {
+    if (event.value === 'csv') {
+      this.exportDataAsCSV();
+    } else if (event.value === 'pdf') {
+      this.exportChartAsPDF();
+    }
   }
 
 }

@@ -6,12 +6,19 @@
       <div class="search">
         <app-search-bar></app-search-bar>
       </div>
-      <button (click)="exportDataAsCSV()">Export as CSV</button>
+      <p-dropdown
+        [options]="exportOptions" 
+        [(ngModel)]="selectedExportOption" 
+        placeholder="Export Options"
+        (onChange)="onExportOptionChange($event)">
+      </p-dropdown>
     </div>
     <div *ngIf="assetData" class="asset-details">
       <h1>{{ ticker | uppercase }} Historical Prices</h1>
       <div class="card">
-        <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+        <div #chart>
+          <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+        </div>
         <h1>{{ ticker | uppercase }} Predicted Prices</h1>
         <div class="tabs">
           <p-tabView>
