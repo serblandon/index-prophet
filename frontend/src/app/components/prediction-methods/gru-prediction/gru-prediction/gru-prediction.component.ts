@@ -117,7 +117,7 @@ export class GruPredictionComponent implements OnInit{
     }
 
     exportDataAsCSV() {
-      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-GRU`);
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker.toUpperCase()}-GRU`);
 
       this.toastr.success(`${this.ticker.toUpperCase()}-CSV-GRU has been successfully downloaded.`, 'Success');
     }
@@ -131,7 +131,7 @@ export class GruPredictionComponent implements OnInit{
           const imgWidth = 280; // Adjust the width as needed
           const imgHeight = canvas.height * imgWidth / canvas.width;
           pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-          pdf.save(`${this.ticker}-chart-GRU.pdf`);
+          pdf.save(`${this.ticker.toUpperCase()}-chart-GRU.pdf`);
   
           this.toastr.success(`${this.ticker.toUpperCase()}-GRU has been successfully exported as PDF.`, 'Success');
         }).catch(error => {

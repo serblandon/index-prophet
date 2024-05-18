@@ -121,7 +121,7 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
     }
 
     exportDataAsCSV() {
-      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-LSTM`);
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker.toUpperCase()}-LSTM`);
       
       this.toastr.success(`${this.ticker.toUpperCase()}-CSV-LSTM has been successfully downloaded.`, 'Success');
     }
@@ -135,7 +135,7 @@ export class LstmPredictionComponent implements OnInit, OnChanges{
           const imgWidth = 280; // Adjust the width as needed
           const imgHeight = canvas.height * imgWidth / canvas.width;
           pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-          pdf.save(`${this.ticker}-chart-LSTM.pdf`);
+          pdf.save(`${this.ticker.toUpperCase()}-chart-LSTM.pdf`);
   
           this.toastr.success(`${this.ticker.toUpperCase()}-LSTM has been successfully exported as PDF.`, 'Success');
         }).catch(error => {

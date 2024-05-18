@@ -113,7 +113,7 @@ export class ProphetPredictionComponent implements OnInit {
     }
 
     exportDataAsCSV() {
-      this.csvExportService.downloadFile(this.predictedData, `${this.ticker}-Prophet`);
+      this.csvExportService.downloadFile(this.predictedData, `${this.ticker.toUpperCase()}-Prophet`);
 
       this.toastr.success(`${this.ticker.toUpperCase()}-CSV-Prophet has been successfully downloaded.`, 'Success');
     }
@@ -127,7 +127,7 @@ export class ProphetPredictionComponent implements OnInit {
           const imgWidth = 280; // Adjust the width as needed
           const imgHeight = canvas.height * imgWidth / canvas.width;
           pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-          pdf.save(`${this.ticker}-chart-Prophet.pdf`);
+          pdf.save(`${this.ticker.toUpperCase()}-chart-Prophet.pdf`);
   
           this.toastr.success(`${this.ticker.toUpperCase()}-Prophet has been successfully exported as PDF.`, 'Success');
         }).catch(error => {
