@@ -1,0 +1,16 @@
+<div class="date-range-picker">
+    <mat-form-field appearance="fill">
+      <mat-label>Start date</mat-label>
+      <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker startView="year"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>End date</mat-label>
+      <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker startView="year"></mat-datepicker>
+    </mat-form-field>
+    <button pButton type="button" label="Apply" icon="pi pi-check" (click)="applyDateRange()"></button>
+    <button pButton type="button" label="Reset" icon="pi pi-refresh" class="p-button-secondary" (click)="resetDateRange()"></button>
+  </div>  
