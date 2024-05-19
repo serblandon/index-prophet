@@ -20,11 +20,14 @@ import { ToastrService } from 'ngx-toastr';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { DatePickerComponent } from '../../date-picker/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
-  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule, ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent, TabViewModule, DropdownModule, FormsModule, SplitButtonModule],
+  imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule,
+            ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent,
+            TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent ],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -37,7 +40,9 @@ export class IndividualAssetComponent implements OnInit {
   assetDataChart: any;
   chartOptions: any;
 
-  // dropdown predictions
+  filteredAssetData: IAssetHistoricalData[] = [];
+  filteredAssetDataChart: any;
+
   predictionMethods: SelectItem[] = [
     { label: 'Prophet Prediction', value: 'prophet' },
     { label: 'LSTM Prediction', value: 'LSTM'},
@@ -69,56 +74,8 @@ export class IndividualAssetComponent implements OnInit {
       .subscribe({
         next: (data: IAssetHistoricalData[]) => {
           this.assetData = data;
-
-          // Prepare chart data
-          this.assetDataChart = {
-            labels: this.assetData.map((entity) => entity.date.toString()),
-            datasets: [
-              {
-                type:'line',
-                data: this.assetData.map((entity) => entity.adjClosePrice),
-                fill: false,
-                pointStyle:false,
-                pointRadius: 3,
-                tension: 0.1
-              }
-            ]
-          };
-
-          // Set chart options
-          this.chartOptions = {
-            plugins: {
-              legend: {
-                display: false,
-              },
-              tooltip: {
-                label: 'Price',
-                enabled: true,
-                backgroundColor: 'rgba(0,0,0,0.8)',
-                bodyColor: '#ffffff',
-                bodyFont: {
-                  size: 14
-                },
-                borderColor: '#42A5F5',
-                borderWidth: 1,
-                cornerRadius: 3,
-                displayColors: false,
-                mode: 'index',
-                intersect: false
-              }
-              },
-            scales: {
-              y: {
-                beginAtZero: true // Start the y-axis from zero
-              }
-            },
-            responsive: true, // Make the chart responsive
-            animation: {
-              duration: 1600, // general animation time
-              easing: 'easeInOutQuad'
-            }
-          };
-
+          this.filteredAssetData = data;
+          this.prepareChartData(this.assetData);
         },
         error: (error) => {
           console.error('Failed to get asset data:', error);
@@ -133,7 +90,7 @@ export class IndividualAssetComponent implements OnInit {
   }
 
   exportDataAsCSV() {
-    this.csvExportService.downloadFile(this.assetData, `${this.ticker.toUpperCase()}-historical`);
+    this.csvExportService.downloadFile(this.filteredAssetData, `${this.ticker.toUpperCase()}-historical`);
 
     this.toastr.success(`${this.ticker.toUpperCase()}-CSV-Historical has been successfully downloaded.`, 'Success');
   }
@@ -156,6 +113,69 @@ export class IndividualAssetComponent implements OnInit {
     } else {
       this.toastr.error('Chart element is not available.', 'Error');
     }
+  }
+
+  applyDateRange(dateRange: { startDate: Date | null, endDate: Date | null }) {
+    const { startDate, endDate } = dateRange;
+    if (startDate && endDate) {
+      this.filteredAssetData = this.assetData.filter((data) => {
+        const date = new Date(data.date);
+        return date >= startDate && date <= endDate;
+      });
+      this.prepareChartData(this.filteredAssetData);
+    } else {
+      this.filteredAssetData = this.assetData;
+      this.prepareChartData(this.assetData);
+    }
+  }
+
+  prepareChartData(data: IAssetHistoricalData[] = this.assetData) {
+    this.filteredAssetDataChart = {
+      labels: data.map((entity) => entity.date.toString()),
+      datasets: [
+        {
+          type: 'line',
+          data: data.map((entity) => entity.adjClosePrice),
+          fill: false,
+          pointStyle: false,
+          pointRadius: 3,
+          tension: 0.1
+        }
+      ]
+    };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          label: 'Price',
+          enabled: true,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          bodyColor: '#ffffff',
+          bodyFont: {
+            size: 14
+          },
+          borderColor: '#42A5F5',
+          borderWidth: 1,
+          cornerRadius: 3,
+          displayColors: false,
+          mode: 'index',
+          intersect: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      responsive: true,
+      animation: {
+        duration: 1600,
+        easing: 'easeInOutQuad'
+      }
+    };
   }
 
 }

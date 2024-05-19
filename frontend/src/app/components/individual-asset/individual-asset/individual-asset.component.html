@@ -8,11 +8,16 @@
       </div>
       <p-splitButton label="Export" icon="pi pi-download" (onClick)="exportDataAsCSV()" [model]="exportItems"></p-splitButton>
     </div>
+
+    <app-date-picker
+      (dateRangeChange)="applyDateRange($event)">
+    </app-date-picker>
+
     <div *ngIf="assetData" class="asset-details">
       <h1>{{ ticker | uppercase }} Historical Prices</h1>
       <div class="card">
         <div #chart>
-          <p-chart type="line" [data]="assetDataChart" [options]="chartOptions"></p-chart>
+          <p-chart type="line" [data]="filteredAssetDataChart" [options]="chartOptions"></p-chart>
         </div>
         <h1>{{ ticker | uppercase }} Predicted Prices</h1>
         <div class="tabs">
