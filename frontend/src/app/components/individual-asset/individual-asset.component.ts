@@ -5,23 +5,23 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { switchMap } from 'rxjs';
 import { IAssetHistoricalData } from 'src/app/models/IAssetHistoricalData';
 import { IndividualAssetHistoricalService } from 'src/app/services/individual-asset-historical/individual-asset-historical.service';
-import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { ChartModule } from 'primeng/chart';
 import 'chartjs-adapter-moment';
 import { MenuItem, SelectItem } from 'primeng/api';
 import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
-import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction.component';
-import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction.component';
+import { ProphetPredictionComponent } from '../prediction-methods/prophet-prediction/prophet-prediction.component';
+import { LstmPredictionComponent } from '../prediction-methods/lstm-prediction/lstm-prediction.component';
+import { GruPredictionComponent } from '../prediction-methods/gru-prediction/gru-prediction.component';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { ToastrService } from 'ngx-toastr';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { DatePickerComponent } from '../../date-picker/date-picker/date-picker.component';
-import { RsiIndicatorComponent } from '../../rsi-indicator/rsi-indicator.component';
+import { DatePickerComponent } from '../date-picker/date-picker.component';
+import { RsiIndicatorComponent } from '../rsi-indicator/rsi-indicator.component';
 
 @Component({
   selector: 'app-individual-asset',
