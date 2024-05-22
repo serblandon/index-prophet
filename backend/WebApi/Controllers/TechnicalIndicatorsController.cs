@@ -18,7 +18,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("[action]/{ticker}/rsi")]
+        [HttpGet("[action]/rsi/{ticker}")]
         [ProducesResponseType(typeof(IEnumerable<RSIDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetRsiValuesAscending(string ticker)
         {
