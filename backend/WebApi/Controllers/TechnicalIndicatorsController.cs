@@ -20,7 +20,7 @@ namespace WebApi.Controllers
 
         [HttpGet("[action]/{ticker}/rsi")]
         [ProducesResponseType(typeof(IEnumerable<RSIDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetPredictedAssetPricesAscendingAsync(string ticker)
+        public async Task<IActionResult> GetRsiValuesAscending(string ticker)
         {
             ticker = ticker.ToUpper();
 
