@@ -12,6 +12,7 @@ public partial class IndexProphetContext : DbContext
 
     public virtual DbSet<HistoricalPrice> HistoricalPrices { get; set; }
     public virtual DbSet<PredictedPrice> PredictedPrices { get; set; }
+    public virtual DbSet<TechnicalIndicator> TechnicalIndicators { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,6 +55,49 @@ public partial class IndexProphetContext : DbContext
             entity.Property(e => e.PredictionMethod)
                 .HasMaxLength(30)
                 .HasColumnName("prediction_method");
+            entity.Property(e => e.Ticker)
+                .HasMaxLength(12)
+                .HasColumnName("ticker");
+        });
+
+        modelBuilder.Entity<TechnicalIndicator>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("technical_indicators_pkey");
+
+            entity.ToTable("technical_indicators");
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.BollingerLower }, "unique_ticker_date_bollinger_lower").IsUnique();
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.BollingerUpper }, "unique_ticker_date_bollinger_upper").IsUnique();
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.Macd }, "unique_ticker_date_macd").IsUnique();
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.Rsi }, "unique_ticker_date_rsi").IsUnique();
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.SignalLine }, "unique_ticker_date_signal_line").IsUnique();
+
+            entity.HasIndex(e => new { e.Ticker, e.Date, e.Sma }, "unique_ticker_date_sma").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BollingerLower)
+                .HasPrecision(20, 6)
+                .HasColumnName("bollinger_lower");
+            entity.Property(e => e.BollingerUpper)
+                .HasPrecision(20, 6)
+                .HasColumnName("bollinger_upper");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Macd)
+                .HasPrecision(20, 6)
+                .HasColumnName("macd");
+            entity.Property(e => e.Rsi)
+                .HasPrecision(20, 6)
+                .HasColumnName("rsi");
+            entity.Property(e => e.SignalLine)
+                .HasPrecision(20, 6)
+                .HasColumnName("signal_line");
+            entity.Property(e => e.Sma)
+                .HasPrecision(20, 6)
+                .HasColumnName("sma");
             entity.Property(e => e.Ticker)
                 .HasMaxLength(12)
                 .HasColumnName("ticker");
