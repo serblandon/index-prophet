@@ -30,6 +30,13 @@
                 <app-gru-prediction *ngSwitchCase="'GRU'" [assetData]="assetData"></app-gru-prediction>
               </ng-container>
             </p-tabPanel>
+
+            <p-tabPanel header="Technical Indicators">
+              <p-dropdown [options]="technicalIndicators" [(ngModel)]="selectedIndicator" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
+              <ng-container [ngSwitch]="selectedIndicator.value">
+                <app-rsi-indicator *ngSwitchCase="'RSI'"></app-rsi-indicator>
+              </ng-container>
+            </p-tabPanel>
           </p-tabView>
         </div>
       </div>

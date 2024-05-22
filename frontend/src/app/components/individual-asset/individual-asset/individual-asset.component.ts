@@ -21,13 +21,15 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { DatePickerComponent } from '../../date-picker/date-picker/date-picker.component';
+import { RsiIndicatorComponent } from '../../rsi-indicator/rsi-indicator/rsi-indicator.component';
 
 @Component({
   selector: 'app-individual-asset',
   standalone: true,
   imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule,
             ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent,
-            TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent ],
+            TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent,
+            RsiIndicatorComponent ],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -49,6 +51,11 @@ export class IndividualAssetComponent implements OnInit {
     { label: 'GRU Prediction', value: 'GRU'}
   ];
   selectedPrediction: SelectItem = this.predictionMethods[0];
+
+  technicalIndicators: SelectItem[] = [
+    { label: 'Relative Strength Index (RSI)', value: 'RSI' },
+  ];
+  selectedIndicator: SelectItem = this.technicalIndicators[0];
 
   exportItems: MenuItem[];
   
