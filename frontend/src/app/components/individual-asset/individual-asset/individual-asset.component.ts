@@ -13,7 +13,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ProphetPredictionComponent } from '../../prediction-methods/prophet-prediction/prophet-prediction.component';
-import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction/lstm-prediction.component';
+import { LstmPredictionComponent } from '../../prediction-methods/lstm-prediction/lstm-prediction.component';
 import { GruPredictionComponent } from '../../prediction-methods/gru-prediction/gru-prediction.component';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { ToastrService } from 'ngx-toastr';
