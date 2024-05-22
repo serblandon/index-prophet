@@ -6,8 +6,8 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class PredictedPricesController : ControllerBase
     {
         private readonly IMediator _mediator;
