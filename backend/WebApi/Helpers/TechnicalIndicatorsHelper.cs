@@ -72,5 +72,35 @@ namespace WebApi.Helpers
 
             return smaValues;
         }
+
+        public List<(DateOnly Date, decimal UpperBand, decimal LowerBand)> CalculateBollingerBands(List<HistoricalPrice> data, int period = 20, int multiplier = 2)
+        {
+            var bollingerBands = new List<(DateOnly Date, decimal UpperBand, decimal LowerBand)>();
+
+            var smaValues = data.Select(d => d.AdjClosePrice).Take(data.Count - period + 1).ToList();
+
+            for (int i = period - 1; i < data.Count; i++)
+            {
+                var periodData = data.Skip(i - period + 1).Take(period).ToList();
+                var stdDev = CalculateStandardDeviation(periodData.Select(p => p.AdjClosePrice).ToList());
+                var upperBand = smaValues[i - period + 1] + (stdDev * multiplier);
+                var lowerBand = smaValues[i - period + 1] - (stdDev * multiplier);
+
+                bollingerBands.Add((data[i].Date, upperBand, lowerBand));
+            }
+
+            return bollingerBands;
+        }
+
+        private decimal CalculateStandardDeviation(List<decimal> values)
+        {
+            if (values.Count == 0) return 0;
+
+            var average = values.Average();
+            var sumOfSquaresOfDifferences = values.Select(val => (val - average) * (val - average)).Sum();
+            var stdDev = (decimal)Math.Sqrt((double)(sumOfSquaresOfDifferences / values.Count));
+
+            return stdDev;
+        }
     }
 }
