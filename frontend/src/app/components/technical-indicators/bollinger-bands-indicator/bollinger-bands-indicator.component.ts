@@ -11,11 +11,12 @@ import { switchMap } from 'rxjs';
 import { IBollingerBandsData } from 'src/app/models/IBollingerBandsData';
 import { CsvExportService } from 'src/app/services/csv-export/csv-export.service';
 import { TechnicalIndicatorService } from 'src/app/services/technical-indicator/technical-indicator.service';
+import { DatePickerComponent } from '../../date-picker/date-picker.component';
 
 @Component({
   selector: 'app-bollinger-bands-indicator',
   standalone: true,
-  imports: [CommonModule, ChartModule, SplitButtonModule],
+  imports: [CommonModule, ChartModule, SplitButtonModule, DatePickerComponent],
   templateUrl: './bollinger-bands-indicator.component.html',
   styleUrl: './bollinger-bands-indicator.component.scss'
 })
@@ -28,6 +29,9 @@ export class BollingerBandsIndicatorComponent implements OnInit{
   indicatorData: IBollingerBandsData[] = [];
   totalDataChart: any;
   chartOptions: any;
+
+  filteredAssetData: IBollingerBandsData[] = [];
+  filteredAssetDataChart: any;
 
   exportItems: MenuItem[];
 
@@ -52,72 +56,11 @@ export class BollingerBandsIndicatorComponent implements OnInit{
         .subscribe({
           next: (data: IBollingerBandsData[]) => {
             this.indicatorData = data;
-
-            this.totalDataChart = {
-              labels: data.map((entity) => entity.date.toString()),
-              datasets: [
-                {
-                  label: 'Upper Band',
-                  type: 'line',
-                  data: data.map((entity) => entity.bollingerUpper),
-                  fill: false,
-                  pointStyle: false,
-                  borderColor: 'rgba(255, 0, 0, 1)',
-                  tension: 0.1
-                },
-                {
-                  label: 'Lower Band',
-                  type: 'line',
-                  data: data.map((entity) => entity.bollingerLower),
-                  fill: false,
-                  pointStyle: false,
-                  borderColor: 'rgba(0, 0, 255, 1)',
-                  tension: 0.1
-                },
-                {
-                  label: 'SMA',
-                  type: 'line',
-                  data: data.map((entity) => entity.sma),
-                  fill: false,
-                  pointStyle: false,
-                  borderColor: 'rgba(0, 255, 0, 1)',
-                  tension: 0.1
-                }
-              ]
-            };
-        
-            this.chartOptions = {
-              plugins: {
-                legend: {
-                  display: true,
-                },
-                tooltip: {
-                  label: 'Value',
-                  enabled: true,
-                  backgroundColor: 'rgba(0,0,0,0.8)',
-                  bodyColor: '#ffffff',
-                  bodyFont: {
-                    size: 14
-                  },
-                  borderColor: '#42A5F5',
-                  borderWidth: 0.4,
-                  cornerRadius: 3,
-                  displayColors: false,
-                  mode: 'index',
-                  intersect: false
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              },
-              responsive: true,
-              animation: {
-                duration: 1600,
-                easing: 'easeInOutQuad'
-              }
-            };
+            this.filteredAssetData = data;
+            this.prepareChartData(this.indicatorData);
+          },
+          error: (error) => {
+            console.error('Failed to get asset data:', error);
           }
         });
       }
@@ -146,5 +89,87 @@ export class BollingerBandsIndicatorComponent implements OnInit{
     } else {
       this.toastr.error('Chart element is not available.', 'Error');
     }
+  }
+
+  applyDateRange(dateRange: { startDate: Date | null, endDate: Date | null }) {
+    const { startDate, endDate } = dateRange;
+    if (startDate && endDate) {
+      this.filteredAssetData = this.indicatorData.filter((data) => {
+        const date = new Date(data.date);
+        return date >= startDate && date <= endDate;
+      });
+      this.prepareChartData(this.filteredAssetData);
+    } else {
+      this.filteredAssetData = this.indicatorData;
+      this.prepareChartData(this.indicatorData);
+    }
+  }
+
+  prepareChartData(data: IBollingerBandsData[] = this.indicatorData) {
+    this.filteredAssetDataChart = {
+      labels: data.map((entity) => entity.date.toString()),
+      datasets: [
+        {
+          label: 'Upper Band',
+          type: 'line',
+          data: data.map((entity) => entity.bollingerUpper),
+          fill: false,
+          pointStyle: false,
+          borderColor: 'rgba(255, 0, 0, 1)',
+          tension: 0.1
+        },
+        {
+          label: 'Lower Band',
+          type: 'line',
+          data: data.map((entity) => entity.bollingerLower),
+          fill: false,
+          pointStyle: false,
+          borderColor: 'rgba(0, 0, 255, 1)',
+          tension: 0.1
+        },
+        {
+          label: 'SMA',
+          type: 'line',
+          data: data.map((entity) => entity.sma),
+          fill: false,
+          pointStyle: false,
+          borderColor: 'rgba(0, 255, 0, 1)',
+          tension: 0.1
+        }
+      ]
+    };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          display: true,
+        },
+        tooltip: {
+          label: 'Value',
+          enabled: true,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          bodyColor: '#ffffff',
+          bodyFont: {
+            size: 14
+          },
+          borderColor: '#42A5F5',
+          borderWidth: 0.4,
+          cornerRadius: 3,
+          displayColors: false,
+          mode: 'index',
+          intersect: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      responsive: true,
+      animation: {
+        duration: 1600,
+        easing: 'easeInOutQuad'
+      }
+    };
   }
 }

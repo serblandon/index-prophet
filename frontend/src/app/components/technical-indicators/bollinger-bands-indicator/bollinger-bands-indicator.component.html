@@ -1,4 +1,7 @@
+<app-date-picker
+      (dateRangeChange)="applyDateRange($event)">
+    </app-date-picker>
 <div #chart>
-    <p-chart type="line" [data]="totalDataChart" [options]="chartOptions"></p-chart>
+    <p-chart type="line" [data]="filteredAssetDataChart" [options]="chartOptions"></p-chart>
 </div>
 <p-splitButton label="Export" icon="pi pi-download" (onClick)="exportDataAsCSV()" [model]="exportItems"></p-splitButton>
