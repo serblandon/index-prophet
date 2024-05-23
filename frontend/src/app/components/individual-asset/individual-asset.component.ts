@@ -23,6 +23,7 @@ import jsPDF from 'jspdf';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
 import { RsiIndicatorComponent } from '../technical-indicators/rsi-indicator/rsi-indicator.component';
 import { SmaIndicatorComponent } from '../technical-indicators/sma-indicator/sma-indicator.component';
+import { BollingerBandsIndicatorComponent } from '../technical-indicators/bollinger-bands-indicator/bollinger-bands-indicator.component';
 
 @Component({
   selector: 'app-individual-asset',
@@ -30,7 +31,7 @@ import { SmaIndicatorComponent } from '../technical-indicators/sma-indicator/sma
   imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule,
             ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent,
             TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent,
-            RsiIndicatorComponent, SmaIndicatorComponent ],
+            RsiIndicatorComponent, SmaIndicatorComponent, BollingerBandsIndicatorComponent ],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -55,7 +56,8 @@ export class IndividualAssetComponent implements OnInit {
 
   technicalIndicators: SelectItem[] = [
     { label: 'Relative Strength Index (RSI)', value: 'RSI' },
-    { label: 'Simple Moving Average (SMA)', value: 'SMA'}
+    { label: 'Simple Moving Average (SMA)', value: 'SMA'},
+    { label: 'Bollinger Bands', value: 'Bollinger Bands'}
   ];
   selectedIndicator: SelectItem = this.technicalIndicators[0];
 

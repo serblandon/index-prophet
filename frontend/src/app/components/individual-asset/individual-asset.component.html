@@ -36,6 +36,7 @@
               <ng-container [ngSwitch]="selectedIndicator.value">
                 <app-rsi-indicator *ngSwitchCase="'RSI'"></app-rsi-indicator>
                 <app-sma-indicator *ngSwitchCase="'SMA'"></app-sma-indicator>
+                <app-bollinger-bands-indicator *ngSwitchCase="'Bollinger Bands'"></app-bollinger-bands-indicator>
               </ng-container>
             </p-tabPanel>
           </p-tabView>
