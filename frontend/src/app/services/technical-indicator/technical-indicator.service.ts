@@ -17,7 +17,7 @@ export class TechnicalIndicatorService {
   }
 
   getSmaValues(ticker: string): Observable<ISmaData[]> {
-    return this.httpClient.get<ISmaData[]>(`/api/TechnicalIndicators/GetSmaValuesAscending/msa/${ticker}`);
+    return this.httpClient.get<ISmaData[]>(`/api/TechnicalIndicators/GetSmaValuesAscending/sma/${ticker}`);
   }
 
   getBollingerBandsValues(ticker: string): Observable<IBollingerBandsData[]> {
