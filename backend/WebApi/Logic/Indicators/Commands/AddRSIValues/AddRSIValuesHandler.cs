@@ -15,7 +15,6 @@ namespace WebApi.Logic.Indicators.Commands.UpdateRSIValues
         {
             _indexProphetContext = indexProphetContext;
             _technicalIndicatorsHelper = technicalIndicatorsHelper;
-
         }
 
         public async Task<Unit> Handle(AddRSIValuesCommand request, CancellationToken cancellationToken)
