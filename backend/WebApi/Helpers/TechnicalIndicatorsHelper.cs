@@ -57,5 +57,20 @@ namespace WebApi.Helpers
 
             return rsiValues;
         }
+
+        public List<decimal> CalculateSMA(List<HistoricalPrice> data, int period)
+        {
+            var smaValues = new List<decimal>();
+            if (data.Count < period) return smaValues;
+
+            for (int i = 0; i <= data.Count - period; i++)
+            {
+                var periodData = data.Skip(i).Take(period).Select(h => h.AdjClosePrice).ToList();
+                var sma = periodData.Average();
+                smaValues.Add(sma);
+            }
+
+            return smaValues;
+        }
     }
 }
