@@ -15,7 +15,7 @@ namespace WebApi.Logic.Indicators.Queries.GetBollingerBandsValues
 
         public async Task<IEnumerable<BollingerBandsDto>> Handle(GetBollingerBandsValuesQuery request, CancellationToken cancellationToken)
         {
-            var bollingerValues = await _indexProphetContext.TechnicalIndicators.Where(entry => entry.Ticker == request.Ticker && entry.BollingerLower != null && entry.BollingerLower != null)
+            var bollingerValues = await _indexProphetContext.TechnicalIndicators.Where(entry => entry.Ticker == request.Ticker && entry.BollingerLower != null && entry.BollingerLower != null && entry.Sma != null)
                                                                         .Select(entry => new BollingerBandsDto
                                                                         {
                                                                             Date = entry.Date,

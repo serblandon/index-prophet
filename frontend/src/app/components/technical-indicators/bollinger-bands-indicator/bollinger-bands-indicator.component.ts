@@ -57,11 +57,27 @@ export class BollingerBandsIndicatorComponent implements OnInit{
               labels: data.map((entity) => entity.date.toString()),
               datasets: [
                 {
+                  label: 'Upper Band',
                   type: 'line',
-                  data: data.map((entity) => entity.b),
+                  data: data.map((entity) => entity.bollingerUpper),
                   fill: false,
-                  pointStyle: false,
-                  pointRadius: 3,
+                  borderColor: 'rgba(255, 0, 0, 1)',
+                  tension: 0.1
+                },
+                {
+                  label: 'Lower Band',
+                  type: 'line',
+                  data: data.map((entity) => entity.bollingerLower),
+                  fill: false,
+                  borderColor: 'rgba(0, 0, 255, 1)',
+                  tension: 0.1
+                },
+                {
+                  label: 'SMA',
+                  type: 'line',
+                  data: data.map((entity) => entity.sma),
+                  fill: false,
+                  borderColor: 'rgba(0, 255, 0, 1)',
                   tension: 0.1
                 }
               ]
