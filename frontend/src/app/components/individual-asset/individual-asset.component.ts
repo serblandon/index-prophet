@@ -21,7 +21,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
-import { RsiIndicatorComponent } from '../rsi-indicator/rsi-indicator.component';
+import { RsiIndicatorComponent } from '../technical-indicators/rsi-indicator/rsi-indicator.component';
+import { SmaIndicatorComponent } from '../technical-indicators/sma-indicator/sma-indicator.component';
 
 @Component({
   selector: 'app-individual-asset',
@@ -29,7 +30,7 @@ import { RsiIndicatorComponent } from '../rsi-indicator/rsi-indicator.component'
   imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule,
             ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent,
             TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent,
-            RsiIndicatorComponent ],
+            RsiIndicatorComponent, SmaIndicatorComponent ],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
@@ -54,6 +55,7 @@ export class IndividualAssetComponent implements OnInit {
 
   technicalIndicators: SelectItem[] = [
     { label: 'Relative Strength Index (RSI)', value: 'RSI' },
+    { label: 'Simple Moving Average (SMA)', value: 'SMA'}
   ];
   selectedIndicator: SelectItem = this.technicalIndicators[0];
 

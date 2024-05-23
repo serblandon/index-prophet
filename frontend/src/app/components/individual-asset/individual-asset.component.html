@@ -35,6 +35,7 @@
               <p-dropdown [options]="technicalIndicators" [(ngModel)]="selectedIndicator" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
               <ng-container [ngSwitch]="selectedIndicator.value">
                 <app-rsi-indicator *ngSwitchCase="'RSI'"></app-rsi-indicator>
+                <app-sma-indicator *ngSwitchCase="'SMA'"></app-sma-indicator>
               </ng-container>
             </p-tabPanel>
           </p-tabView>
