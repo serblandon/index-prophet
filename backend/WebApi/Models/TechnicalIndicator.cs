@@ -12,10 +12,6 @@ public partial class TechnicalIndicator
 
     public decimal? Sma { get; set; }
 
-    public decimal? Macd { get; set; }
-
-    public decimal? SignalLine { get; set; }
-
     public decimal? BollingerUpper { get; set; }
 
     public decimal? BollingerLower { get; set; }

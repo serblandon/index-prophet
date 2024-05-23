@@ -70,11 +70,7 @@ public partial class IndexProphetContext : DbContext
 
             entity.HasIndex(e => new { e.Ticker, e.Date, e.BollingerUpper }, "unique_ticker_date_bollinger_upper").IsUnique();
 
-            entity.HasIndex(e => new { e.Ticker, e.Date, e.Macd }, "unique_ticker_date_macd").IsUnique();
-
             entity.HasIndex(e => new { e.Ticker, e.Date, e.Rsi }, "unique_ticker_date_rsi").IsUnique();
-
-            entity.HasIndex(e => new { e.Ticker, e.Date, e.SignalLine }, "unique_ticker_date_signal_line").IsUnique();
 
             entity.HasIndex(e => new { e.Ticker, e.Date, e.Sma }, "unique_ticker_date_sma").IsUnique();
 
@@ -86,15 +82,9 @@ public partial class IndexProphetContext : DbContext
                 .HasPrecision(20, 6)
                 .HasColumnName("bollinger_upper");
             entity.Property(e => e.Date).HasColumnName("date");
-            entity.Property(e => e.Macd)
-                .HasPrecision(20, 6)
-                .HasColumnName("macd");
             entity.Property(e => e.Rsi)
                 .HasPrecision(20, 6)
                 .HasColumnName("rsi");
-            entity.Property(e => e.SignalLine)
-                .HasPrecision(20, 6)
-                .HasColumnName("signal_line");
             entity.Property(e => e.Sma)
                 .HasPrecision(20, 6)
                 .HasColumnName("sma");
