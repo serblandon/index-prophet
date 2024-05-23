@@ -61,6 +61,7 @@ export class BollingerBandsIndicatorComponent implements OnInit{
                   type: 'line',
                   data: data.map((entity) => entity.bollingerUpper),
                   fill: false,
+                  pointStyle: false,
                   borderColor: 'rgba(255, 0, 0, 1)',
                   tension: 0.1
                 },
@@ -69,6 +70,7 @@ export class BollingerBandsIndicatorComponent implements OnInit{
                   type: 'line',
                   data: data.map((entity) => entity.bollingerLower),
                   fill: false,
+                  pointStyle: false,
                   borderColor: 'rgba(0, 0, 255, 1)',
                   tension: 0.1
                 },
@@ -77,6 +79,7 @@ export class BollingerBandsIndicatorComponent implements OnInit{
                   type: 'line',
                   data: data.map((entity) => entity.sma),
                   fill: false,
+                  pointStyle: false,
                   borderColor: 'rgba(0, 255, 0, 1)',
                   tension: 0.1
                 }
@@ -86,7 +89,7 @@ export class BollingerBandsIndicatorComponent implements OnInit{
             this.chartOptions = {
               plugins: {
                 legend: {
-                  display: false,
+                  display: true,
                 },
                 tooltip: {
                   label: 'Value',
@@ -97,7 +100,7 @@ export class BollingerBandsIndicatorComponent implements OnInit{
                     size: 14
                   },
                   borderColor: '#42A5F5',
-                  borderWidth: 1,
+                  borderWidth: 0.4,
                   cornerRadius: 3,
                   displayColors: false,
                   mode: 'index',

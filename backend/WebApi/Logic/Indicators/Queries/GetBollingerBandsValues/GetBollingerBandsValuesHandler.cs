@@ -21,6 +21,7 @@ namespace WebApi.Logic.Indicators.Queries.GetBollingerBandsValues
                                                                             Date = entry.Date,
                                                                             BollingerLower = entry.BollingerLower,
                                                                             BollingerUpper = entry.BollingerUpper,
+                                                                            Sma = entry.Sma
                                                                         })
                                                                         .OrderBy(x => x.Date).ToListAsync(cancellationToken);
 
