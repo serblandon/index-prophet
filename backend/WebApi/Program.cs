@@ -2,10 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebApi.Data;
 using WebApi.Helpers;
+using WebApi.Logic.LivePrice;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient<LivePriceService>();
+builder.Services.AddSingleton<LivePriceService>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,6 +22,8 @@ builder.Services.AddScoped<TechnicalIndicatorsHelper>();
 
 builder.Services.AddDbContext<IndexProphetContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddHostedService<LivePriceHostedService>();
 
 var app = builder.Build();
 
