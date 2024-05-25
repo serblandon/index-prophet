@@ -9,14 +9,15 @@
 img {
   width: 14vh;
   height: auto;
+  padding-bottom: 3vh;
 }
 
 .title {
-  text-align: center; /* Centers the title text */
-  border-radius: 8px; /* Rounds the corners of the div */
+  text-align: center;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif; /* Arial font, with sans-serif as a fallback */
-  font-size: 32px; /* Sets the size of the title */
-  color: #333; /* Dark grey color for the text */
+  font-family: 'Arial', sans-serif;
+  font-size: 50px;
+  color: #333;
   margin-bottom: 2vh;
 }
