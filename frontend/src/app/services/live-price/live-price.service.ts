@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { ILivePrice } from 'src/app/models/ILivePrice';
 import { GenericRestApi } from 'src/app/shared/generic-rest-api';
 
