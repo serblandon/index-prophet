@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, switchMap, timer } from "rxjs";
+import { ILivePrice } from "../models/ILivePrice";
 
 export class GenericRestApi<T> {
     protected url = '';
@@ -13,5 +14,12 @@ export class GenericRestApi<T> {
 
     public getByTickerAndPredictionMethod(ticker: string, predictionMethod: string): Observable<T[]> {
       return this.httpClient.get<T[]>(`${this.url}/${ticker}/${predictionMethod}`);
+    }
+
+    public getLivePrices(): Observable<ILivePrice[]> {
+      return timer(0, 60000)
+        .pipe(
+          switchMap(() => this.httpClient.get<ILivePrice[]>(`${this.url}`))
+        )
     }
 }
