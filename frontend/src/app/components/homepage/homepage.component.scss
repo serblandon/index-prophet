@@ -21,3 +21,30 @@ img {
   color: #333;
   margin-bottom: 2vh;
 }
+
+.gainers-losers-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.gainers, .losers {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 0;
+  font-size: 18px;
+}

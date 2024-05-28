@@ -6,4 +6,22 @@
         <app-search-bar></app-search-bar>
       </div>
     </div>
+
+    <div class="gainers-losers-container">
+      <div class="gainers">
+        <h3>Top Gainers</h3>
+        <ul>
+          <li *ngFor="let gainer of topGainers">
+            {{ gainer.ticker }}: {{ gainer.price }} $ ({{ gainer.change_percentage }})
+          </li>
+        </ul>
+      </div>
+      <div class="losers">
+        <h3>Top Losers</h3>
+        <ul>
+          <li *ngFor="let loser of topLosers">
+            {{ loser.ticker }}: {{ loser.price }} $ ({{ loser.change_percentage }})
+          </li>
+        </ul>
+      </div>
   </div>
