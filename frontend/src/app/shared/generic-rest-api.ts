@@ -15,11 +15,4 @@ export class GenericRestApi<T> {
     public getByTickerAndPredictionMethod(ticker: string, predictionMethod: string): Observable<T[]> {
       return this.httpClient.get<T[]>(`${this.url}/${ticker}/${predictionMethod}`);
     }
-
-    public getLivePrices(): Observable<ILivePrice[]> {
-      return timer(0, 60000)
-        .pipe(
-          switchMap(() => this.httpClient.get<ILivePrice[]>(`${this.url}`))
-        )
-    }
 }
