@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { CacheService } from '../cache/cache.service';
 import { Observable, catchError, of, tap } from 'rxjs';
 import { ILivePrice } from 'src/app/models/ILivePrice';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiveApiService{
   protected apiUrl = 'https://www.alphavantage.co/query';
-  protected apiKey = '2E4P60FNR7VET9BF';
   private cacheTTL = 60 * 10000; // 10 min cache
 
   constructor(protected httpClient: HttpClient, private cacheService: CacheService) {}
@@ -21,7 +21,7 @@ export class LiveApiService{
       return of(cachedData);
     }
 
-    return this.httpClient.get<ILivePrice[]>(`${this.apiUrl}?function=TOP_GAINERS_LOSERS&apikey=${this.apiKey}`).pipe(
+    return this.httpClient.get<ILivePrice[]>(`${this.apiUrl}?function=TOP_GAINERS_LOSERS&apikey=${environment.apiKey}`).pipe(
       tap(data => this.cacheService.set(cacheKey, data, this.cacheTTL)),
       catchError(this.handleError<any>('getTopGainersAndLosers', []))
     );
@@ -34,7 +34,7 @@ export class LiveApiService{
       return of(cachedData);
     }
 
-    return this.httpClient.get<any>(`${this.apiUrl}?function=OVERVIEW&symbol=${symbol}&apikey=${this.apiKey}`).pipe(
+    return this.httpClient.get<any>(`${this.apiUrl}?function=OVERVIEW&symbol=${symbol}&apikey=${environment.apiKey}`).pipe(
       tap(data => this.cacheService.set(cacheKey, data, this.cacheTTL)),
       catchError(this.handleError<any>('getCompanyOverview', {}))
     );
