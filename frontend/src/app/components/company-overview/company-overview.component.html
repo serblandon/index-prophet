@@ -1,0 +1,22 @@
+<div class="overview" *ngIf="overviewData">
+    <h2>Company Overview</h2>
+    <div class="row">
+      <p><strong>Symbol:</strong> {{ overviewData.Symbol }}</p>
+      <p><strong>Name:</strong> {{ overviewData.Name }}</p>
+    </div>
+    <p><strong>Description:</strong> {{ overviewData.Description }}</p>
+    <div class="row">
+      <p><strong>Sector:</strong> {{ overviewData.Sector }}</p>
+      <p><strong>Industry:</strong> {{ overviewData.Industry }}</p>
+    </div>
+    <div class="row">
+        <p><strong>52-Week High:</strong> {{ overviewData['52WeekHigh'] }} $</p>
+        <p><strong>52-Week Low:</strong> {{ overviewData['52WeekLow'] }} $</p>
+        <p><strong>Market Capitalization:</strong> {{ overviewData.MarketCapitalization / 1000000000000 }} b</p>
+    </div>
+    <div class="row">
+      <p><strong>Dividend Yield:</strong> {{ overviewData.DividendYield }} %</p>
+      <p><strong>PE Ratio:</strong> {{ overviewData.PERatio }}</p>
+    </div>
+  </div>
+  

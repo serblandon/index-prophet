@@ -1,0 +1,45 @@
+.overview {
+    padding: 1rem;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #f0f0f0;
+}
+  
+    h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #ffffff;
+    }
+  
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+  
+      p {
+        flex: 1 1 30%;
+        margin: 0.5rem 0;
+        min-width: 200px;
+        color: #f0f0f0;
+      }
+  
+      @media (max-width: 600px) {
+        p {
+          flex: 1 1 100%;
+        }
+      }
+    }
+  
+    p {
+      margin: 0.5rem 0;
+  
+      strong {
+        display: inline-block;
+        width: 150px;
+        color: #ffffff;
+      }
+    }
