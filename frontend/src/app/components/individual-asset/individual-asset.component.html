@@ -8,6 +8,10 @@
       </div>
     </div>
 
+    <div class="company-overview">
+      <app-company-overview [ticker]="ticker"></app-company-overview>
+    </div>
+    
     <app-date-picker
       (dateRangeChange)="applyDateRange($event)">
     </app-date-picker>

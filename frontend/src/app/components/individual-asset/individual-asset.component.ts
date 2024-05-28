@@ -24,6 +24,7 @@ import { DatePickerComponent } from '../date-picker/date-picker.component';
 import { RsiIndicatorComponent } from '../technical-indicators/rsi-indicator/rsi-indicator.component';
 import { SmaIndicatorComponent } from '../technical-indicators/sma-indicator/sma-indicator.component';
 import { BollingerBandsIndicatorComponent } from '../technical-indicators/bollinger-bands-indicator/bollinger-bands-indicator.component';
+import { CompanyOverviewComponent } from '../company-overview/company-overview.component';
 
 @Component({
   selector: 'app-individual-asset',
@@ -31,7 +32,7 @@ import { BollingerBandsIndicatorComponent } from '../technical-indicators/bollin
   imports: [AutoCompleteModule, CommonModule, SearchBarComponent, ChartModule,
             ProphetPredictionComponent, LstmPredictionComponent, GruPredictionComponent,
             TabViewModule, DropdownModule, FormsModule, SplitButtonModule, DatePickerComponent,
-            RsiIndicatorComponent, SmaIndicatorComponent, BollingerBandsIndicatorComponent ],
+            RsiIndicatorComponent, SmaIndicatorComponent, BollingerBandsIndicatorComponent, CompanyOverviewComponent ],
   templateUrl: './individual-asset.component.html',
   styleUrl: './individual-asset.component.scss'
 })
