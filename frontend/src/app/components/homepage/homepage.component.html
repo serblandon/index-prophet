@@ -9,7 +9,7 @@
 
     <div class="gainers-losers-container">
       <div class="gainers">
-        <h3>Top Gainers</h3>
+        <h2 class="green">Top Gainers</h2>
         <ul>
           <li *ngFor="let gainer of topGainers">
             {{ gainer.ticker }}: {{ gainer.price }} $ ({{ gainer.change_percentage }})
@@ -17,7 +17,7 @@
         </ul>
       </div>
       <div class="losers">
-        <h3>Top Losers</h3>
+        <h2 class="red">Top Losers</h2>
         <ul>
           <li *ngFor="let loser of topLosers">
             {{ loser.ticker }}: {{ loser.price }} $ ({{ loser.change_percentage }})

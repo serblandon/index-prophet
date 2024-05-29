@@ -2,10 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebApi.Data;
 using WebApi.Helpers;
+using WebApi.Logic.LiveApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient<LiveApiService>();
+builder.Services.AddSingleton<LiveApiService>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

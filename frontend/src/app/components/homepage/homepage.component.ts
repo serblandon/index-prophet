@@ -21,12 +21,13 @@ export class HomepageComponent implements OnInit{
   }
 
   fetchTopGainersAndLosers() {
-    this.liveApiService.getTopGainersAndLosers().subscribe(data => {
-      if (data.top_gainers) {
-        this.topGainers = data.top_gainers.slice(0, 3);
-      }
-      if (data.top_losers) {
-        this.topLosers = data.top_losers.slice(0, 3);
+    this.liveApiService.getTopGainersAndLosers().subscribe({
+      next: (data: any) => {
+        this.topGainers = data.topGainers;
+        this.topLosers = data.topLosers;
+      },
+      error: (error) => {
+        console.error('Failed to get top gainers and losers data from API Vantage', error);
       }
     });
   }

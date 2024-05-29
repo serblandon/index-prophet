@@ -1,43 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CacheService } from '../cache/cache.service';
-import { Observable, catchError, of, tap } from 'rxjs';
-import { ILivePrice } from 'src/app/models/ILivePrice';
-import { environment } from 'src/environments/environment';
+import { Observable, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiveApiService{
-  protected apiUrl = 'https://www.alphavantage.co/query';
-  private cacheTTL = 60 * 10000; // 10 min cache
+  private backendUrl = '/api/liveapi';
 
-  constructor(protected httpClient: HttpClient, private cacheService: CacheService) {}
+  constructor(private httpClient: HttpClient) {}
 
   public getTopGainersAndLosers(): Observable<any> {
-    const cacheKey = 'topGainersAndLosers';
-    const cachedData = this.cacheService.get(cacheKey);
-    if (cachedData) {
-      return of(cachedData);
-    }
-
-    return this.httpClient.get<ILivePrice[]>(`${this.apiUrl}?function=TOP_GAINERS_LOSERS&apikey=${environment.apiKey}`).pipe(
-      tap(data => this.cacheService.set(cacheKey, data, this.cacheTTL)),
-      catchError(this.handleError<any>('getTopGainersAndLosers', []))
+    return this.httpClient.get<any>(`${this.backendUrl}/topGainersAndLosers`).pipe(
+      catchError(this.handleError<any>('getTopGainersAndLosers', { topGainers: [], topLosers: [] }))
     );
   }
 
   public getCompanyOverview(symbol: string): Observable<any> {
-    const cacheKey = `overview-${symbol}`;
-    const cachedData = this.cacheService.get(cacheKey);
-    if (cachedData) {
-      return of(cachedData);
-    }
-
-    return this.httpClient.get<any>(`${this.apiUrl}?function=OVERVIEW&symbol=${symbol}&apikey=${environment.apiKey}`).pipe(
-      tap(data => this.cacheService.set(cacheKey, data, this.cacheTTL)),
-      catchError(this.handleError<any>('getCompanyOverview', {}))
-    );
+    return this.httpClient.get<any>(`${this.backendUrl}/overview/${symbol}`);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
