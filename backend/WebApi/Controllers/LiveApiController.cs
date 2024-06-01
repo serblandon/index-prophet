@@ -38,5 +38,26 @@ namespace WebApi.Controllers
             var result = await _liveApiService.GetCompanyOverview(symbol);
             return Ok(result);
         }
+
+        [HttpGet("{symbol}/balanceSheet")]
+        public async Task<IActionResult> GetBalanceSheet(string symbol)
+        {
+            var data = await _liveApiService.GetFinancialStatement(symbol, "BALANCE_SHEET");
+            return Ok(data);
+        }
+
+        [HttpGet("{symbol}/incomeStatement")]
+        public async Task<IActionResult> GetIncomeStatement(string symbol)
+        {
+            var data = await _liveApiService.GetFinancialStatement(symbol, "INCOME_STATEMENT");
+            return Ok(data);
+        }
+
+        [HttpGet("{symbol}/cashFlow")]
+        public async Task<IActionResult> GetCashFlow(string symbol)
+        {
+            var data = await _liveApiService.GetFinancialStatement(symbol, "CASH_FLOW");
+            return Ok(data);
+        }
     }
 }

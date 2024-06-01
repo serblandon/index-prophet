@@ -68,5 +68,25 @@ namespace WebApi.Logic.LiveApi
 
             return companyOverview;
         }
+
+        public async Task<Dictionary<string, string>> GetFinancialStatement(string symbol, string statementType)
+        {
+            var cacheKey = $"{statementType}-{symbol}";
+            if (_memoryCache.TryGetValue(cacheKey, out Dictionary<string, string> cachedData))
+            {
+                return cachedData;
+            }
+
+            var url = $"{_alphaVantageBaseUrl}?function={statementType}&symbol={symbol}&apikey={_apiKey}";
+            var response = await _httpClient.GetStringAsync(url);
+            var data = JObject.Parse(response);
+
+            var financialStatement = data.Children<JProperty>()
+                .ToDictionary(prop => prop.Name, prop => prop.Value.ToString());
+
+            _memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(10));
+
+            return financialStatement;
+        }
     }
 }
