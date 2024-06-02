@@ -1,0 +1,35 @@
+<div class="financial-statements" *ngIf="balanceSheet || incomeStatement || cashFlow">
+  <h2>Financial Statements for {{ ticker | uppercase }}</h2>
+  <div class="tabs">
+    <p-tabView>
+      <p-tabPanel header="Financial Statements">
+        <p-dropdown [options]="financialStatements" [(ngModel)]="selectedFinancialStatement" optionLabel="label" [editable]="false" [filter]="false"></p-dropdown>
+        <ng-container [ngSwitch]="selectedFinancialStatement.value">
+            <div *ngSwitchCase="'Balance'">
+                  <table>
+                    <tr *ngFor="let item of balanceSheet | keyvalue">
+                      <td>{{ item.key }}</td>
+                      <td>{{ formatValue(item.value) }}</td>
+                    </tr>
+                  </table>
+              </div>
+              <div *ngSwitchCase="'Income'">
+                  <table>
+                    <tr *ngFor="let item of incomeStatement | keyvalue">
+                      <td>{{ item.key }}</td>
+                      <td>{{ formatValue(item.value) }}</td>
+                    </tr>
+                  </table>
+              </div>
+              <div *ngSwitchCase="'Cash'">
+                  <table>
+                    <tr *ngFor="let item of cashFlow | keyvalue">
+                      <td>{{ item.key }}</td>
+                      <td>{{ formatValue(item.value) }}</td>
+                    </tr>
+                  </table>
+              </div>
+        </ng-container>
+      </p-tabPanel>
+    </p-tabView>
+  </div>

@@ -1,0 +1,43 @@
+.financial-statements {
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-top: 3vh;
+    }
+  
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+  
+      p-dropdown {
+        width: 300px;
+        margin: 10px;
+      }
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+  
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        color: #ffffff;
+      }
+  
+      th {
+        background-color: #333;
+        text-align: left;
+      }
+  
+      tr:nth-child(even) {
+        background-color: #444;
+      }
+  
+      tr:hover {
+        background-color: #555;
+      }
+    }
+  }

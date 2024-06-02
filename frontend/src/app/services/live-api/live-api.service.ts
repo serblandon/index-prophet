@@ -20,6 +20,10 @@ export class LiveApiService{
     return this.httpClient.get<any>(`${this.backendUrl}/overview/${symbol}`);
   }
 
+  public getFinancialStatement(symbol: string, statementType: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.backendUrl}/financialStatement/${symbol}/${statementType}`);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
