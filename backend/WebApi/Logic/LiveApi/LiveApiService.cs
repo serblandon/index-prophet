@@ -81,7 +81,13 @@ namespace WebApi.Logic.LiveApi
             var response = await _httpClient.GetStringAsync(url);
             var data = JObject.Parse(response);
 
-            var financialStatement = data.Children<JProperty>()
+            var annualReports = data["annualReports"]?.FirstOrDefault() as JObject;
+            if (annualReports == null)
+            {
+                throw new Exception("No annual reports found.");
+            }
+
+            var financialStatement = annualReports.Properties()
                 .ToDictionary(prop => prop.Name, prop => prop.Value.ToString());
 
             _memoryCache.Set(cacheKey, data, TimeSpan.FromMinutes(10));

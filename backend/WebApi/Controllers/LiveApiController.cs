@@ -39,25 +39,19 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{symbol}/balanceSheet")]
-        public async Task<IActionResult> GetBalanceSheet(string symbol)
+        [HttpGet("financialStatement/{symbol}/{statementType}")]
+        public async Task<IActionResult> GetFinancialStatement(string symbol, string statementType)
         {
-            var data = await _liveApiService.GetFinancialStatement(symbol, "BALANCE_SHEET");
-            return Ok(data);
+            try
+            {
+                var result = await _liveApiService.GetFinancialStatement(symbol, statementType);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        [HttpGet("{symbol}/incomeStatement")]
-        public async Task<IActionResult> GetIncomeStatement(string symbol)
-        {
-            var data = await _liveApiService.GetFinancialStatement(symbol, "INCOME_STATEMENT");
-            return Ok(data);
-        }
-
-        [HttpGet("{symbol}/cashFlow")]
-        public async Task<IActionResult> GetCashFlow(string symbol)
-        {
-            var data = await _liveApiService.GetFinancialStatement(symbol, "CASH_FLOW");
-            return Ok(data);
-        }
     }
 }
