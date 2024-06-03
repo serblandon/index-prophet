@@ -8,24 +8,27 @@
             <div *ngSwitchCase="'Balance'">
                   <table>
                     <tr *ngFor="let item of balanceSheet | keyvalue">
-                      <td>{{ item.key }}</td>
-                      <td>{{ formatValue(item.value) }}</td>
+                      <ng-container *ngFor="let subItem of (asKeyValue(item.value) | keyvalue)">
+                        <td>{{ formatValue(subItem.value) }}</td>
+                    </ng-container>
                     </tr>
                   </table>
               </div>
               <div *ngSwitchCase="'Income'">
                   <table>
                     <tr *ngFor="let item of incomeStatement | keyvalue">
-                      <td>{{ item.key }}</td>
-                      <td>{{ formatValue(item.value) }}</td>
+                      <ng-container *ngFor="let subItem of (asKeyValue(item.value) | keyvalue)">
+                        <td>{{ formatValue(subItem.value) }}</td>
+                    </ng-container>
                     </tr>
                   </table>
               </div>
               <div *ngSwitchCase="'Cash'">
                   <table>
                     <tr *ngFor="let item of cashFlow | keyvalue">
-                      <td>{{ item.key }}</td>
-                      <td>{{ formatValue(item.value) }}</td>
+                      <ng-container *ngFor="let subItem of (asKeyValue(item.value) | keyvalue)">
+                        <td>{{ formatValue(subItem.value) }}</td>
+                    </ng-container>
                     </tr>
                   </table>
               </div>

@@ -56,4 +56,8 @@ export class FinancialStatementComponent {
   isNumeric(value: any): boolean {
     return !isNaN(parseFloat(value)) && isFinite(value);
   }
+
+  asKeyValue(value: any): { [key: string]: any } {
+    return typeof value === 'object' && value !== null ? value : {};
+  }
 }
