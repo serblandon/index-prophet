@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { LiveApiService } from 'src/app/services/live-api/live-api.service';
 
 @Component({
@@ -16,6 +16,16 @@ export class CompanyOverviewComponent implements OnInit {
   constructor(private liveApiService: LiveApiService) {}
 
   ngOnInit(): void {
+    this.fetchCompanyOverview();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ticker'] && !changes['ticker'].isFirstChange()) {
+      this.fetchCompanyOverview();
+    }
+  }
+
+  private fetchCompanyOverview(): void {
     if (this.ticker) {
       this.liveApiService.getCompanyOverview(this.ticker).subscribe({
         next: (data: any) => {
